@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:pet_care_flutter_app/src/core/usecases/navigator/navigator_push_usecase.dart';
 import 'package:pet_care_flutter_app/src/core/util/colors.dart';
+import 'package:pet_care_flutter_app/src/features/add_pet/presentation/pages/add_pet_page.dart';
 
-class NoPet extends StatelessWidget {
+class NoPet extends StatefulWidget {
   const NoPet({Key? key}) : super(key: key);
+
+  @override
+  State<NoPet> createState() => _NoPetState();
+}
+
+class _NoPetState extends State<NoPet> {
+  final NavigatorPushUseCase navigatorPushUseCase = NavigatorPushUseCase();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +33,16 @@ class NoPet extends StatelessWidget {
             primary: AppColor.primaryColor,
             fixedSize: const Size(190, 50),
           ),
-          onPressed: () {},
+          onPressed: () async {
+            await navigatorPushUseCase(
+              NavigatorPushParam(
+                route: MaterialPageRoute(
+                  builder: (context) => const AddPetPage(),
+                ),
+                context: context,
+              ),
+            );
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [

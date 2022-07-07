@@ -6,15 +6,15 @@ import 'package:pet_care_flutter_app/src/features/home/presentation/widgets/no_p
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  final pets = const [1];
+  final pets = const [];
 
   @override
   Widget build(BuildContext context) {
     return BaseWithScaffold(
       title: "My Pets",
+      hasRightIcon: true,
       icon: Icons.menu,
       iconPressed: () {},
-      hasRightIcon: true,
       child: pets.isNotEmpty ? const HasPet() : const NoPet(),
     );
   }
