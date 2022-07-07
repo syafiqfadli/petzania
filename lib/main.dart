@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_care_flutter_app/src/features/home/presentation/pages/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,6 +10,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox.shrink();
+    return MaterialApp(
+      theme: ThemeData(fontFamily: "Ambit"),
+      home: const HomePage(),
+    );
   }
 }
