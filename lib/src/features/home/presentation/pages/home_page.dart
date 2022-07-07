@@ -6,7 +6,7 @@ import 'package:pet_care_flutter_app/src/features/home/presentation/widgets/no_p
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  final pets = const [];
+  final pets = const [1];
 
   @override
   Widget build(BuildContext context) {

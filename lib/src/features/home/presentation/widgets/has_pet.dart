@@ -9,7 +9,7 @@ class HasPet extends StatelessWidget {
     return Expanded(
       child: GridView.builder(
         physics: const BouncingScrollPhysics(),
-        itemCount: 5,
+        itemCount: 15,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           mainAxisExtent: 115,

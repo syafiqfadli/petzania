@@ -58,31 +58,44 @@ class HasAddAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 30),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          IconButton(
-            onPressed: iconPressed,
-            icon: Icon(icon),
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            iconSize: 34,
-          ),
-          const Spacer(),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 34,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const Spacer(),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.add),
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            iconSize: 34,
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: IconButton(
+                  onPressed: iconPressed,
+                  icon: Icon(icon),
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  iconSize: 34,
+                ),
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 34,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.add),
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  iconSize: 34,
+                ),
+              )
+            ],
           ),
         ],
       ),
@@ -100,31 +113,36 @@ class NoAddAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-
     return Padding(
       padding: const EdgeInsets.only(bottom: 30),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.menu),
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            iconSize: 34,
-          ),
-          const Spacer(),
-          // TODO: Fix center issue
-          Padding(
-            padding: EdgeInsets.only(right: width * 0.295),
-            child: Text(
-              title,
-              style: const TextStyle(
-                fontSize: 34,
-                fontWeight: FontWeight.bold,
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.menu),
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  iconSize: 34,
+                ),
               ),
-            ),
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 34,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              )
+            ],
           ),
         ],
       ),
