@@ -1,0 +1,31 @@
+import 'package:get_it/get_it.dart';
+import 'package:pet_care_flutter_app/src/features/home/data/repositories/home_repo_impl.dart';
+import 'package:pet_care_flutter_app/src/features/home/domain/repositories/home_repo.dart';
+import 'package:pet_care_flutter_app/src/features/home/domain/usecases/get_pet_list_usecase.dart';
+import 'package:pet_care_flutter_app/src/features/home/presentation/bloc/home_bloc.dart';
+import 'package:pet_care_flutter_app/src/features/home/presentation/cubit/get_pet_list_cubit.dart';
+import 'package:pet_care_flutter_app/src/features/home/presentation/cubit/refresh_home_cubit.dart';
+
+final homeInjector = GetIt.instance;
+
+void init() {
+  //Repositories
+  homeInjector.registerLazySingleton<HomeRepo>(
+      () => HomeRepoImpl(localDataSource: homeInjector()));
+
+  // UseCases
+  homeInjector.registerLazySingleton<GetPetListUseCase>(
+      () => GetPetListUseCase(homeRepo: homeInjector()));
+
+  //Blocs
+  homeInjector.registerLazySingleton<GetPetListCubit>(() => GetPetListCubit(
+        getPetListUseCase: homeInjector(),
+      ));
+
+  homeInjector.registerLazySingleton<HomeBloc>(() => HomeBloc(
+        getPetCubit: homeInjector(),
+      ));
+
+  homeInjector.registerLazySingleton<RefreshHomeCubit>(
+      () => RefreshHomeCubit(homeBloc: homeInjector()));
+}

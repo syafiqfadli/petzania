@@ -8,6 +8,7 @@ class BaseWithScaffold extends StatefulWidget {
   final bool hasRightIcon;
   final IconData icon;
   final void Function() iconPressed;
+  final Widget? bottomWidget;
   final Widget child;
 
   const BaseWithScaffold({
@@ -16,6 +17,7 @@ class BaseWithScaffold extends StatefulWidget {
     required this.hasRightIcon,
     required this.icon,
     required this.iconPressed,
+    this.bottomWidget,
     required this.child,
   }) : super(key: key);
 
@@ -29,9 +31,12 @@ class _BaseWithScaffoldState extends State<BaseWithScaffold> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTapDown: (_) => FocusManager.instance.primaryFocus?.unfocus(),
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         backgroundColor: AppColor.baseColor,
+        bottomNavigationBar: SafeArea(
+          child: widget.bottomWidget ?? const SizedBox.shrink(),
+        ),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(15, 60, 15, 0),

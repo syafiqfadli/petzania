@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:pet_care_flutter_app/src/core/util/colors.dart';
+import 'package:pet_care_flutter_app/src/core/domain/entities/pet_entity.dart';
 
 class PetCard extends StatelessWidget {
-  const PetCard({Key? key}) : super(key: key);
+  final PetEntity pet;
+
+  const PetCard({
+    Key? key,
+    required this.pet,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,20 +22,27 @@ class PetCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           elevation: 2,
-          color: AppColor.color1,
+          color: Color(pet.colorValue),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                CircleAvatar(
-                  radius: 25,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const CircleAvatar(
+                  radius: 30,
                   backgroundColor: Colors.white,
                 ),
-                Spacer(),
-                Text(
-                  "Pet Name",
-                  style: TextStyle(color: Colors.white),
+                const SizedBox(width: 10),
+                Flexible(
+                  child: Text(
+                    pet.name,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
                 ),
               ],
             ),

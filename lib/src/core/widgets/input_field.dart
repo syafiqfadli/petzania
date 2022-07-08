@@ -29,7 +29,7 @@ class InputFieldWidget extends StatelessWidget {
     return TextFormField(
       controller: textController,
       obscureText: isObscure,
-      // autovalidateMode: AutovalidateMode.onUserInteraction,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       onFieldSubmitted: onFieldSubmitted,
       validator: validate,
       keyboardType: inputType,

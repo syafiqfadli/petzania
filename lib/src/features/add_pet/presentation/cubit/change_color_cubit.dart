@@ -5,7 +5,7 @@ import 'package:pet_care_flutter_app/src/core/util/colors.dart';
 class ChangeColorCubit extends Cubit<void> {
   ChangeColorCubit() : super(null);
 
-  Color changedColor = AppColor.color1;
+  Color changedColor = AppColor.defaultColor;
 
   void changeColor(Color color) {
     changedColor = color;
