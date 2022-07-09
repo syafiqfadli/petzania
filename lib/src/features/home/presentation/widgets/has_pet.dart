@@ -30,7 +30,10 @@ class _HasPetState extends State<HasPet> {
                 crossAxisCount: 2,
                 mainAxisExtent: 115,
               ),
-              itemBuilder: (context, index) => PetCard(pet: petList[index]),
+              itemBuilder: (context, index) => PetCard(
+                pet: petList[index],
+                index: index,
+              ),
             ),
           ),
         );
