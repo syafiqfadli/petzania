@@ -8,8 +8,10 @@ final addPetInjector = GetIt.instance;
 
 void init() {
   //Repositories
-  addPetInjector.registerLazySingleton<AddPetRepo>(
-      () => AddPetRepoImpl(localDataSource: addPetInjector()));
+  addPetInjector.registerLazySingleton<AddPetRepo>(() => AddPetRepoImpl(
+        localDataSource: addPetInjector(),
+        homeRepo: addPetInjector(),
+      ));
 
   // UseCases
   addPetInjector.registerLazySingleton<AddPetUseCase>(

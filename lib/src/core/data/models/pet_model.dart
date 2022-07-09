@@ -10,8 +10,8 @@ class PetModel extends PetEntity {
     );
   }
 
-  static List<PetModel> fromList(List<dynamic> jsonList) {
-    List<PetModel> pets = [];
+  static List<PetEntity> addToList(List<dynamic> jsonList) {
+    List<PetEntity> pets = [];
     for (var pet in jsonList) {
       pets.add(PetModel.fromJson(pet));
     }

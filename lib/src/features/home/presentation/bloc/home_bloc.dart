@@ -21,7 +21,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async {
     await getPetCubit.getPetList();
 
-    final petList = getPetCubit.state.petList;
+    final petList = getPetCubit.state;
 
     if (petList.isEmpty) {
       emit(HomeNoPet());
