@@ -25,7 +25,7 @@ class AddPetRepoImpl implements AddPetRepo {
 
       petList.insert(0, pet);
 
-      await coreRepo.savePet(petList: petList);
+      await coreRepo.savePetList(petList: petList);
 
       return const Right(null);
     } catch (error) {

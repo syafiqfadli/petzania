@@ -46,24 +46,12 @@ class _AddPetPageState extends State<AddPetPage> {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => changeColorCubit,
-        ),
-        BlocProvider(
-          create: (context) => pickColorCubit,
-        ),
-        BlocProvider(
-          create: (context) => isColorSelectedCubit,
-        ),
-        BlocProvider(
-          create: (context) => isNameValidCubit,
-        ),
-        BlocProvider.value(
-          value: addPetCubit,
-        ),
-        BlocProvider.value(
-          value: homeBloc,
-        ),
+        BlocProvider(create: (context) => changeColorCubit),
+        BlocProvider(create: (context) => pickColorCubit),
+        BlocProvider(create: (context) => isColorSelectedCubit),
+        BlocProvider(create: (context) => isNameValidCubit),
+        BlocProvider.value(value: addPetCubit),
+        BlocProvider.value(value: homeBloc),
       ],
       child: BlocListener<AddPetCubit, AddPetState>(
         listener: (context, state) {

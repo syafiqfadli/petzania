@@ -13,7 +13,6 @@ final homeInjector = GetIt.instance;
 void init() {
   //Repositories
   homeInjector.registerLazySingleton<HomeRepo>(() => HomeRepoImpl(
-        localDataSource: homeInjector(),
         coreRepo: homeInjector(),
       ));
 

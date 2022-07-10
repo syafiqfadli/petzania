@@ -14,7 +14,7 @@ class CoreRepoImpl implements CoreRepo {
   });
 
   @override
-  Future<Either<Failure, void>> savePet({
+  Future<Either<Failure, void>> savePetList({
     required List<PetEntity> petList,
   }) async {
     try {
@@ -23,6 +23,21 @@ class CoreRepoImpl implements CoreRepo {
       await localDataSource.store(LocalKeys.petList, jsonEncode(pets));
 
       return const Right(null);
+    } catch (error) {
+      return Left(CacheFailure(message: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> getPetList() async {
+    try {
+      final petList = await localDataSource.get(LocalKeys.petList);
+
+      if (petList == null) {
+        return const Right("[]");
+      }
+
+      return Right(petList);
     } catch (error) {
       return Left(CacheFailure(message: error.toString()));
     }
