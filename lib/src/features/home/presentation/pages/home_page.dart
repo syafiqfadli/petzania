@@ -17,15 +17,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late HomeBloc homeBloc;
-  late GetPetListCubit getPetListCubit;
-  late RefreshHomeCubit refreshHomeCubit;
+  late GetPetListCubit getPetListCubit = homeInjector<GetPetListCubit>();
+  late RefreshHomeCubit refreshHomeCubit = homeInjector<RefreshHomeCubit>();
 
   @override
   void initState() {
     super.initState();
     homeBloc = homeInjector<HomeBloc>()..add(GetPetListEvent());
-    getPetListCubit = homeInjector<GetPetListCubit>();
-    refreshHomeCubit = homeInjector<RefreshHomeCubit>();
   }
 
   @override

@@ -27,18 +27,11 @@ class _AddPetPageState extends State<AddPetPage> {
   final PickColorCubit pickColorCubit = PickColorCubit();
   final IsColorSelectedCubit isColorSelectedCubit = IsColorSelectedCubit();
   final IsNameValidCubit isNameValidCubit = IsNameValidCubit();
-  late AddPetCubit addPetCubit;
-  late HomeBloc homeBloc;
+  final AddPetCubit addPetCubit = addPetInjector<AddPetCubit>();
+  final HomeBloc homeBloc = homeInjector<HomeBloc>();
 
   final TextEditingController _nameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    super.initState();
-    addPetCubit = addPetInjector<AddPetCubit>();
-    homeBloc = homeInjector<HomeBloc>();
-  }
 
   @override
   Widget build(BuildContext context) {

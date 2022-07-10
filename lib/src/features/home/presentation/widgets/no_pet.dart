@@ -22,6 +22,7 @@ class _NoPetState extends State<NoPet> {
 
     return Expanded(
       child: CustomRefresh(
+        predicate: (_) => true,
         onRefresh: _refresh,
         child: ListView(
           physics: const BouncingScrollPhysics(

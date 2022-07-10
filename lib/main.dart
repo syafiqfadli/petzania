@@ -4,6 +4,7 @@ import 'package:pet_care_flutter_app/injector.dart' as injector;
 import 'package:pet_care_flutter_app/src/features/home/presentation/pages/home_page.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   injector.init();
   print('App Started');

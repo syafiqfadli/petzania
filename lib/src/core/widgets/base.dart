@@ -39,13 +39,13 @@ class _BaseWithScaffoldState extends State<BaseWithScaffold> {
           child: widget.bottomWidget ?? const SizedBox.shrink(),
         ),
         // TODO: Remove Delete Button later
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            await GetStorage().erase();
-            print("Data deleted!");
-          },
-          child: const Icon(Icons.delete_forever),
-        ),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () async {
+        //     await GetStorage().erase();
+        //     print("Data deleted!");
+        //   },
+        //   child: const Icon(Icons.delete_forever),
+        // ),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(15, 60, 15, 0),
