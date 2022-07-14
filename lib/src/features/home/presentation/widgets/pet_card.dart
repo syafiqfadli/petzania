@@ -1,14 +1,17 @@
+import 'dart:io';
+
 import 'package:animated_widgets/widgets/rotation_animated.dart';
 import 'package:animated_widgets/widgets/shake_animated_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pet_care_flutter_app/src/core/domain/entities/pet_entity.dart';
+import 'package:pet_care_flutter_app/src/core/util/colors.dart';
 import 'package:pet_care_flutter_app/src/features/home/home_injector.dart';
-import 'package:pet_care_flutter_app/src/features/home/presentation/bloc/home_bloc.dart';
 import 'package:pet_care_flutter_app/src/features/home/presentation/cubit/delete_pet_cubit.dart';
 import 'package:pet_care_flutter_app/src/features/home/presentation/cubit/is_selected_cubit.dart';
 
 class PetCard extends StatefulWidget {
+  final List petList;
   final PetEntity pet;
   final int index;
 
@@ -16,6 +19,7 @@ class PetCard extends StatefulWidget {
     Key? key,
     required this.pet,
     required this.index,
+    required this.petList,
   }) : super(key: key);
 
   @override
@@ -28,13 +32,12 @@ class _PetCardState extends State<PetCard> {
 
   @override
   Widget build(BuildContext context) {
+    List petList = widget.petList;
     PetEntity pet = widget.pet;
     int index = widget.index;
 
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider.value(value: deletePetCubit),
-      ],
+    return BlocProvider.value(
+      value: deletePetCubit,
       child: Padding(
         padding: const EdgeInsets.all(5),
         child: BlocBuilder<IsSelectedCubit, bool>(
@@ -72,10 +75,24 @@ class _PetCardState extends State<PetCard> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            const CircleAvatar(
-                              radius: 30,
-                              backgroundColor: Colors.white,
-                            ),
+                            pet.image == null
+                                ? CircleAvatar(
+                                    radius: 30,
+                                    backgroundColor: Colors.white,
+                                    foregroundColor: AppColor.defaultColor,
+                                    child: Center(
+                                      child: Text(
+                                        pet.name[0].toUpperCase(),
+                                        style: const TextStyle(fontSize: 25),
+                                      ),
+                                    ),
+                                  )
+                                : CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: FileImage(
+                                      File(pet.image!),
+                                    ),
+                                  ),
                             const SizedBox(width: 10),
                             Flexible(
                               child: Text(
@@ -105,6 +122,9 @@ class _PetCardState extends State<PetCard> {
                               ),
                               child: IconButton(
                                 onPressed: () async {
+                                  if (petList.length == 1) {
+                                    isSelectedCubit.isSelected();
+                                  }
                                   await deletePetCubit.deletePet(index);
                                 },
                                 icon: const Icon(Icons.close),

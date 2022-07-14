@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:pet_care_flutter_app/src/core/usecases/navigator/navigator_push_usecase.dart';
 import 'package:pet_care_flutter_app/src/core/util/colors.dart';
 import 'package:pet_care_flutter_app/src/features/add_pet/presentation/pages/add_pet_page.dart';
@@ -38,14 +37,6 @@ class _BaseWithScaffoldState extends State<BaseWithScaffold> {
         bottomNavigationBar: SafeArea(
           child: widget.bottomWidget ?? const SizedBox.shrink(),
         ),
-        // TODO: Remove Delete Button later
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: () async {
-        //     await GetStorage().erase();
-        //     print("Data deleted!");
-        //   },
-        //   child: const Icon(Icons.delete_forever),
-        // ),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(15, 60, 15, 0),

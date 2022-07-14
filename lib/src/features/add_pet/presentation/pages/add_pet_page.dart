@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:pet_care_flutter_app/src/core/domain/entities/pet_entity.dart';
 import 'package:pet_care_flutter_app/src/core/services/dialog_service.dart';
+import 'package:pet_care_flutter_app/src/core/usecases/navigator/navigator_push_usecase.dart';
 import 'package:pet_care_flutter_app/src/core/util/colors.dart';
 import 'package:pet_care_flutter_app/src/core/widgets/base.dart';
 import 'package:pet_care_flutter_app/src/core/widgets/input_field.dart';
@@ -12,6 +15,9 @@ import 'package:pet_care_flutter_app/src/features/add_pet/presentation/cubit/cha
 import 'package:pet_care_flutter_app/src/features/add_pet/presentation/cubit/is_color_selected_cubit.dart';
 import 'package:pet_care_flutter_app/src/features/add_pet/presentation/cubit/is_name_valid_cubit.dart';
 import 'package:pet_care_flutter_app/src/features/add_pet/presentation/cubit/pick_color_cubit.dart';
+import 'package:pet_care_flutter_app/src/features/camera/camera_injector.dart';
+import 'package:pet_care_flutter_app/src/features/camera/presentation/cubit/get_image_cubit.dart';
+import 'package:pet_care_flutter_app/src/features/camera/presentation/pages/take_picture_page.dart';
 import 'package:pet_care_flutter_app/src/features/home/home_injector.dart';
 import 'package:pet_care_flutter_app/src/features/home/presentation/bloc/home_bloc.dart';
 
@@ -27,10 +33,12 @@ class _AddPetPageState extends State<AddPetPage> {
   final PickColorCubit pickColorCubit = PickColorCubit();
   final IsColorSelectedCubit isColorSelectedCubit = IsColorSelectedCubit();
   final IsNameValidCubit isNameValidCubit = IsNameValidCubit();
+  final GetImageCubit getImageCubit = cameraInjector<GetImageCubit>();
   final AddPetCubit addPetCubit = addPetInjector<AddPetCubit>();
   final HomeBloc homeBloc = homeInjector<HomeBloc>();
 
   final TextEditingController _nameController = TextEditingController();
+  final NavigatorPushUseCase navigatorPushUseCase = NavigatorPushUseCase();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -43,6 +51,7 @@ class _AddPetPageState extends State<AddPetPage> {
         BlocProvider(create: (context) => pickColorCubit),
         BlocProvider(create: (context) => isColorSelectedCubit),
         BlocProvider(create: (context) => isNameValidCubit),
+        BlocProvider.value(value: getImageCubit),
         BlocProvider.value(value: addPetCubit),
         BlocProvider.value(value: homeBloc),
       ],
@@ -68,6 +77,7 @@ class _AddPetPageState extends State<AddPetPage> {
           icon: Icons.arrow_back_ios_new,
           iconPressed: () {
             Navigator.of(context).pop();
+            getImageCubit.resetImage();
           },
           bottomWidget: BlocBuilder<IsNameValidCubit, bool>(
             builder: (context, isValid) {
@@ -97,9 +107,43 @@ class _AddPetPageState extends State<AddPetPage> {
                       width: 4.0,
                     ),
                   ),
-                  child: const CircleAvatar(
-                    radius: 70,
-                    backgroundColor: Colors.white,
+                  child: InkWell(
+                    onTap: () async {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                      await navigatorPushUseCase(NavigatorPushParam(
+                        route: MaterialPageRoute(
+                          builder: (context) => const TakePicturePage(),
+                        ),
+                        context: context,
+                      ));
+                    },
+                    child: BlocBuilder<GetImageCubit, String?>(
+                      builder: (context, image) {
+                        if (image != null) {
+                          return CircleAvatar(
+                            radius: 70,
+                            backgroundImage: FileImage(
+                              File(image),
+                            ),
+                          );
+                        }
+                        return CircleAvatar(
+                          radius: 70,
+                          backgroundColor: Colors.white,
+                          foregroundColor: AppColor.defaultColor,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Icon(
+                                Icons.camera_alt,
+                                size: 30,
+                              ),
+                              Text("Add image")
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
                 Padding(
@@ -206,6 +250,7 @@ class _AddPetPageState extends State<AddPetPage> {
 
   void _addPet() {
     final pet = PetEntity(
+      image: getImageCubit.state,
       name: _nameController.text,
       colorValue: pickColorCubit.pickedColor.value,
     );
@@ -279,6 +324,7 @@ class _AddPetPageState extends State<AddPetPage> {
       context: context,
     );
     homeBloc.add(GetPetListEvent());
+    getImageCubit.resetImage();
     _nameController.clear();
     isNameValidCubit.validate(_nameController.text);
     isColorSelectedCubit.isSelected(false);

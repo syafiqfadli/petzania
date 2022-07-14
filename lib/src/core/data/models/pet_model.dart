@@ -1,10 +1,15 @@
 import 'package:pet_care_flutter_app/src/core/domain/entities/pet_entity.dart';
 
 class PetModel extends PetEntity {
-  const PetModel({required super.name, required super.colorValue});
+  const PetModel({
+    required super.image,
+    required super.name,
+    required super.colorValue,
+  });
 
   factory PetModel.fromJson(Map<String, dynamic> parseJson) {
     return PetModel(
+      image: parseJson['image'],
       name: parseJson['name'],
       colorValue: parseJson['colorValue'],
     );
