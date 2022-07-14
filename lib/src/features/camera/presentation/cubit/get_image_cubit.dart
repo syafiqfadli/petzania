@@ -7,10 +7,14 @@ class GetImageCubit extends Cubit<String?> {
   Future<void> getImage(CameraController? controller) async {
     try {
       XFile? image;
-      if (controller != null) {
-        if (controller.value.isInitialized) {
-          image = await controller.takePicture();
-        }
+
+      if (controller == null) {
+        emit(null);
+        return;
+      }
+
+      if (controller.value.isInitialized) {
+        image = await controller.takePicture();
       }
 
       if (image == null) {

@@ -17,7 +17,7 @@ import 'package:pet_care_flutter_app/src/features/add_pet/presentation/cubit/is_
 import 'package:pet_care_flutter_app/src/features/add_pet/presentation/cubit/pick_color_cubit.dart';
 import 'package:pet_care_flutter_app/src/features/camera/camera_injector.dart';
 import 'package:pet_care_flutter_app/src/features/camera/presentation/cubit/get_image_cubit.dart';
-import 'package:pet_care_flutter_app/src/features/camera/presentation/pages/take_picture_page.dart';
+import 'package:pet_care_flutter_app/src/features/camera/presentation/pages/camera_page.dart';
 import 'package:pet_care_flutter_app/src/features/home/home_injector.dart';
 import 'package:pet_care_flutter_app/src/features/home/presentation/bloc/home_bloc.dart';
 
@@ -99,7 +99,6 @@ class _AddPetPageState extends State<AddPetPage> {
               physics: const BouncingScrollPhysics(),
               children: [
                 Container(
-                  width: 140,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
@@ -108,11 +107,13 @@ class _AddPetPageState extends State<AddPetPage> {
                     ),
                   ),
                   child: InkWell(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
                     onTap: () async {
                       FocusManager.instance.primaryFocus?.unfocus();
                       await navigatorPushUseCase(NavigatorPushParam(
                         route: MaterialPageRoute(
-                          builder: (context) => const TakePicturePage(),
+                          builder: (context) => const CameraPage(),
                         ),
                         context: context,
                       ));
@@ -120,15 +121,23 @@ class _AddPetPageState extends State<AddPetPage> {
                     child: BlocBuilder<GetImageCubit, String?>(
                       builder: (context, image) {
                         if (image != null) {
-                          return CircleAvatar(
-                            radius: 70,
-                            backgroundImage: FileImage(
-                              File(image),
-                            ),
+                          return Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.center,
+                                child: CircleAvatar(
+                                  radius: 80,
+                                  backgroundImage: FileImage(
+                                    File(image),
+                                  ),
+                                  backgroundColor: Colors.transparent,
+                                ),
+                              ),
+                            ],
                           );
                         }
                         return CircleAvatar(
-                          radius: 70,
+                          radius: 80,
                           backgroundColor: Colors.white,
                           foregroundColor: AppColor.defaultColor,
                           child: Column(

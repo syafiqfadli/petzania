@@ -35,7 +35,7 @@ void init() {
       ));
 
   homeInjector.registerLazySingleton<HomeBloc>(() => HomeBloc(
-        getPetCubit: homeInjector(),
+        getPetListCubit: homeInjector(),
       ));
 
   homeInjector.registerLazySingleton<RefreshHomeCubit>(

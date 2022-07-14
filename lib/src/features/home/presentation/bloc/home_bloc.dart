@@ -7,10 +7,10 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final GetPetListCubit getPetCubit;
+  final GetPetListCubit getPetListCubit;
 
   HomeBloc({
-    required this.getPetCubit,
+    required this.getPetListCubit,
   }) : super(HomeInitial()) {
     on<GetPetListEvent>(_getPetList);
   }
@@ -19,9 +19,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     GetPetListEvent event,
     Emitter<HomeState> emit,
   ) async {
-    await getPetCubit.getPetList();
+    await getPetListCubit.getPetList();
 
-    final petList = getPetCubit.state;
+    final petList = getPetListCubit.state;
 
     if (petList.isEmpty) {
       emit(HomeNoPet());
