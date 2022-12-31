@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:dartz/dartz.dart';
-import 'package:pet_care_flutter_app/src/core/data/data_sources/local_datasource.dart';
-import 'package:pet_care_flutter_app/src/core/domain/entities/pet_entity.dart';
-import 'package:pet_care_flutter_app/src/core/domain/repositories/core_repo.dart';
-import 'package:pet_care_flutter_app/src/core/errors/failures.dart';
-import 'package:pet_care_flutter_app/src/core/util/keys.dart';
+import '../data_sources/local_datasource.dart';
+import '../../domain/entities/pet_entity.dart';
+import '../../domain/repositories/core_repo.dart';
+import '../../errors/failures.dart';
+import '../../util/keys.dart';
 
 class CoreRepoImpl implements CoreRepo {
   final LocalDataSource localDataSource;

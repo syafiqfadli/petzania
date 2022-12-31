@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pet_care_flutter_app/src/core/widgets/base.dart';
-import 'package:pet_care_flutter_app/src/features/home/home_injector.dart';
-import 'package:pet_care_flutter_app/src/features/home/presentation/bloc/home_bloc.dart';
-import 'package:pet_care_flutter_app/src/features/home/presentation/cubit/get_pet_list_cubit.dart';
-import 'package:pet_care_flutter_app/src/features/home/presentation/cubit/is_selected_cubit.dart';
-import 'package:pet_care_flutter_app/src/features/home/presentation/cubit/refresh_home_cubit.dart';
-import 'package:pet_care_flutter_app/src/features/home/presentation/widgets/has_pet.dart';
-import 'package:pet_care_flutter_app/src/features/home/presentation/widgets/no_pet.dart';
+import 'package:pet_care_flutter_app/src/features/add_pet/presentation/pages/add_pet_page.dart';
+import '../../../../core/widgets/base.dart';
+import '../../home_injector.dart';
+import '../bloc/home_bloc.dart';
+import '../cubit/get_pet_list_cubit.dart';
+import '../cubit/is_selected_cubit.dart';
+import '../cubit/refresh_home_cubit.dart';
+import '../widgets/has_pet.dart';
+import '../widgets/no_pet.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -41,9 +42,27 @@ class _HomePageState extends State<HomePage> {
         builder: (context, isSelected) {
           return BaseWithScaffold(
             title: "My Pets",
-            hasRightIcon: !isSelected,
-            icon: Icons.menu,
-            iconPressed: () {},
+            leftIcon: IconButton(
+              icon: const Icon((Icons.menu)),
+              onPressed: () {},
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              iconSize: 34,
+            ),
+            rightIcon: IconButton(
+              icon: const Icon((Icons.add)),
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AddPetPage(),
+                  ),
+                );
+              },
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              iconSize: 34,
+            ),
             child: BlocBuilder<HomeBloc, HomeState>(
               builder: (context, state) {
                 if (state is HomeHasPet) {

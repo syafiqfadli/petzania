@@ -1,9 +1,9 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pet_care_flutter_app/src/core/util/colors.dart';
-import 'package:pet_care_flutter_app/src/features/camera/presentation/cubit/camera_controller_cubit.dart';
-import 'package:pet_care_flutter_app/src/features/camera/presentation/cubit/camera_cubit.dart';
+import '../../../../core/util/colors.dart';
+import '../cubit/camera_controller_cubit.dart';
+import '../cubit/camera_cubit.dart';
 
 class TakePictureWidget extends StatelessWidget {
   const TakePictureWidget({Key? key}) : super(key: key);
@@ -79,7 +79,7 @@ class TakePictureWidget extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   shape: const CircleBorder(),
                   padding: const EdgeInsets.all(20),
-                  primary: AppColor.primaryColor,
+                  backgroundColor: AppColor.primaryColor,
                 ),
                 child: const Icon(Icons.camera_alt),
               ),

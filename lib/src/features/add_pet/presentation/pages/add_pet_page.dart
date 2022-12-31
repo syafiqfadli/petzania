@@ -3,23 +3,22 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:pet_care_flutter_app/src/core/domain/entities/pet_entity.dart';
-import 'package:pet_care_flutter_app/src/core/services/dialog_service.dart';
-import 'package:pet_care_flutter_app/src/core/usecases/navigator/navigator_push_usecase.dart';
-import 'package:pet_care_flutter_app/src/core/util/colors.dart';
-import 'package:pet_care_flutter_app/src/core/widgets/base.dart';
-import 'package:pet_care_flutter_app/src/core/widgets/input_field.dart';
-import 'package:pet_care_flutter_app/src/features/add_pet/add_pet_injector.dart';
-import 'package:pet_care_flutter_app/src/features/add_pet/presentation/cubit/add_pet_cubit.dart';
-import 'package:pet_care_flutter_app/src/features/add_pet/presentation/cubit/change_color_cubit.dart';
-import 'package:pet_care_flutter_app/src/features/add_pet/presentation/cubit/is_color_selected_cubit.dart';
-import 'package:pet_care_flutter_app/src/features/add_pet/presentation/cubit/is_name_valid_cubit.dart';
-import 'package:pet_care_flutter_app/src/features/add_pet/presentation/cubit/pick_color_cubit.dart';
-import 'package:pet_care_flutter_app/src/features/camera/camera_injector.dart';
-import 'package:pet_care_flutter_app/src/features/camera/presentation/cubit/get_image_cubit.dart';
-import 'package:pet_care_flutter_app/src/features/camera/presentation/pages/camera_page.dart';
-import 'package:pet_care_flutter_app/src/features/home/home_injector.dart';
-import 'package:pet_care_flutter_app/src/features/home/presentation/bloc/home_bloc.dart';
+import '../../../../core/domain/entities/pet_entity.dart';
+import '../../../../core/services/dialog_service.dart';
+import '../../../../core/util/colors.dart';
+import '../../../../core/widgets/base.dart';
+import '../../../../core/widgets/input_field.dart';
+import '../../add_pet_injector.dart';
+import '../cubit/add_pet_cubit.dart';
+import '../cubit/change_color_cubit.dart';
+import '../cubit/is_color_selected_cubit.dart';
+import '../cubit/is_name_valid_cubit.dart';
+import '../cubit/pick_color_cubit.dart';
+import '../../../camera/camera_injector.dart';
+import '../../../camera/presentation/cubit/get_image_cubit.dart';
+import '../../../camera/presentation/pages/camera_page.dart';
+import '../../../home/home_injector.dart';
+import '../../../home/presentation/bloc/home_bloc.dart';
 
 class AddPetPage extends StatefulWidget {
   const AddPetPage({Key? key}) : super(key: key);
@@ -38,7 +37,6 @@ class _AddPetPageState extends State<AddPetPage> {
   final HomeBloc homeBloc = homeInjector<HomeBloc>();
 
   final TextEditingController _nameController = TextEditingController();
-  final NavigatorPushUseCase navigatorPushUseCase = NavigatorPushUseCase();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -71,185 +69,197 @@ class _AddPetPageState extends State<AddPetPage> {
             );
           }
         },
-        child: BaseWithScaffold(
-          title: "Add Pet",
-          hasRightIcon: false,
-          icon: Icons.arrow_back_ios_new,
-          iconPressed: () {
-            Navigator.of(context).pop();
+        child: WillPopScope(
+          onWillPop: () {
             getImageCubit.resetImage();
+            Navigator.of(context).pop();
+            return Future.value(false);
           },
-          bottomWidget: BlocBuilder<IsNameValidCubit, bool>(
-            builder: (context, isValid) {
-              return ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: AppColor.primaryColor,
-                  fixedSize: Size(width, 60),
-                ),
-                onPressed: isValid ? _addPet : null,
-                child: const Text(
-                  'Add Pet',
-                  style: TextStyle(fontSize: 20),
-                ),
-              );
-            },
-          ),
-          child: Expanded(
-            child: ListView(
-              physics: const BouncingScrollPhysics(),
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 4.0,
-                    ),
+          child: BaseWithScaffold(
+            title: "Add Pet",
+            leftIcon: IconButton(
+              icon: const Icon((Icons.arrow_back_ios_new)),
+              onPressed: () {
+                getImageCubit.resetImage();
+                Navigator.of(context).pop();
+              },
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              iconSize: 34,
+            ),
+            bottomWidget: BlocBuilder<IsNameValidCubit, bool>(
+              builder: (context, isValid) {
+                return ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColor.primaryColor,
+                    fixedSize: Size(width, 60),
                   ),
-                  child: InkWell(
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      FocusManager.instance.primaryFocus?.unfocus();
-                      await navigatorPushUseCase(NavigatorPushParam(
-                        route: MaterialPageRoute(
-                          builder: (context) => const CameraPage(),
-                        ),
-                        context: context,
-                      ));
-                    },
-                    child: BlocBuilder<GetImageCubit, String?>(
-                      builder: (context, image) {
-                        if (image != null) {
-                          return Stack(
-                            children: [
-                              Align(
-                                alignment: Alignment.center,
-                                child: CircleAvatar(
-                                  radius: 80,
-                                  backgroundImage: FileImage(
-                                    File(image),
-                                  ),
-                                  backgroundColor: Colors.transparent,
-                                ),
-                              ),
-                            ],
-                          );
-                        }
-                        return CircleAvatar(
-                          radius: 80,
-                          backgroundColor: Colors.white,
-                          foregroundColor: AppColor.defaultColor,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(
-                                Icons.camera_alt,
-                                size: 30,
-                              ),
-                              Text("Add image")
-                            ],
+                  onPressed: isValid ? _addPet : null,
+                  child: const Text(
+                    'Add Pet',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                );
+              },
+            ),
+            child: Expanded(
+              child: ListView(
+                physics: const BouncingScrollPhysics(),
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.black,
+                        width: 4.0,
+                      ),
+                    ),
+                    child: InkWell(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const CameraPage(),
                           ),
                         );
                       },
+                      child: BlocBuilder<GetImageCubit, String?>(
+                        builder: (context, image) {
+                          if (image != null) {
+                            return Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: CircleAvatar(
+                                    radius: 80,
+                                    backgroundImage: FileImage(
+                                      File(image),
+                                    ),
+                                    backgroundColor: Colors.transparent,
+                                  ),
+                                ),
+                              ],
+                            );
+                          }
+                          return CircleAvatar(
+                            radius: 80,
+                            backgroundColor: Colors.white,
+                            foregroundColor: AppColor.defaultColor,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Icon(
+                                  Icons.camera_alt,
+                                  size: 30,
+                                ),
+                                Text("Add image")
+                              ],
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 40,
-                  ),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            const Text(
-                              "Name",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            const SizedBox(width: 15),
-                            SizedBox(
-                              width: width * 0.6,
-                              child: InputFieldWidget(
-                                textController: _nameController,
-                                inputType: TextInputType.text,
-                                hint: "Enter pet name...",
-                                isObscure: false,
-                                onChanged: (String? value) {
-                                  isNameValidCubit.validate(value);
-                                },
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 40,
+                    ),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              const Text(
+                                "Name",
+                                style: TextStyle(fontSize: 20),
                               ),
-                            )
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        Row(
-                          children: [
-                            const Text(
-                              "Color",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            const SizedBox(width: 15),
-                            BlocBuilder<IsColorSelectedCubit, bool>(
-                              builder: (context, isSelected) {
-                                if (!isSelected) {
-                                  return ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      primary: AppColor.primaryColor,
-                                      fixedSize: const Size(190, 40),
-                                    ),
-                                    onPressed: _showColorPicker,
-                                    child: const Text(
-                                      "Choose Color",
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                  );
-                                }
-                                return Row(
-                                  children: [
-                                    BlocBuilder<PickColorCubit, Color>(
-                                      builder: (context, color) {
-                                        return Container(
-                                          width: 40,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                            color: color,
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                              Radius.circular(20),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    ElevatedButton(
+                              const SizedBox(width: 15),
+                              SizedBox(
+                                width: width * 0.6,
+                                child: InputFieldWidget(
+                                  textController: _nameController,
+                                  inputType: TextInputType.text,
+                                  hint: "Enter pet name...",
+                                  isObscure: false,
+                                  onChanged: (String? value) {
+                                    isNameValidCubit.validate(value);
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          Row(
+                            children: [
+                              const Text(
+                                "Color",
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              const SizedBox(width: 15),
+                              BlocBuilder<IsColorSelectedCubit, bool>(
+                                builder: (context, isSelected) {
+                                  if (!isSelected) {
+                                    return ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        primary: AppColor.primaryColor,
-                                        fixedSize: const Size(120, 40),
+                                        backgroundColor: AppColor.primaryColor,
+                                        fixedSize: const Size(190, 40),
                                       ),
                                       onPressed: _showColorPicker,
                                       child: const Text(
-                                        "Change",
+                                        "Choose Color",
                                         style: TextStyle(fontSize: 20),
                                       ),
-                                    )
-                                  ],
-                                );
-                              },
-                            )
-                          ],
-                        ),
-                      ],
+                                    );
+                                  }
+                                  return Row(
+                                    children: [
+                                      BlocBuilder<PickColorCubit, Color>(
+                                        builder: (context, color) {
+                                          return Container(
+                                            width: 40,
+                                            height: 40,
+                                            decoration: BoxDecoration(
+                                              color: color,
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                Radius.circular(20),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              AppColor.primaryColor,
+                                          fixedSize: const Size(120, 40),
+                                        ),
+                                        onPressed: _showColorPicker,
+                                        child: const Text(
+                                          "Change",
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                      )
+                                    ],
+                                  );
+                                },
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -261,6 +271,7 @@ class _AddPetPageState extends State<AddPetPage> {
     final pet = PetEntity(
       image: getImageCubit.state,
       name: _nameController.text,
+      breed: '',
       colorValue: pickColorCubit.pickedColor.value,
     );
 
@@ -291,7 +302,7 @@ class _AddPetPageState extends State<AddPetPage> {
         actions: [
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: AppColor.primaryColor,
+              backgroundColor: AppColor.primaryColor,
             ),
             onPressed: _selectColor,
             child: const Text('Pick'),
@@ -321,7 +332,7 @@ class _AddPetPageState extends State<AddPetPage> {
         actions: [
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: AppColor.primaryColor,
+              backgroundColor: AppColor.primaryColor,
             ),
             onPressed: () {
               Navigator.of(context).pop();

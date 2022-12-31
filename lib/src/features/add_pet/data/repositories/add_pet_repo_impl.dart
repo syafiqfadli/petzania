@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 
-import 'package:pet_care_flutter_app/src/core/domain/entities/pet_entity.dart';
-import 'package:pet_care_flutter_app/src/core/domain/repositories/core_repo.dart';
-import 'package:pet_care_flutter_app/src/core/errors/failures.dart';
-import 'package:pet_care_flutter_app/src/features/add_pet/domain/repositories/add_pet_repo.dart';
-import 'package:pet_care_flutter_app/src/features/home/domain/repositories/home_repo.dart';
+import '../../../../core/domain/entities/pet_entity.dart';
+import '../../../../core/domain/repositories/core_repo.dart';
+import '../../../../core/errors/failures.dart';
+import '../../../home/domain/repositories/home_repo.dart';
+import '../../domain/repositories/add_pet_repo.dart';
 
 class AddPetRepoImpl implements AddPetRepo {
   final CoreRepo coreRepo;
@@ -28,7 +28,6 @@ class AddPetRepoImpl implements AddPetRepo {
 
       return const Right(null);
     } catch (error) {
-      print(error.toString());
       return Left(CacheFailure(message: error.toString()));
     }
   }

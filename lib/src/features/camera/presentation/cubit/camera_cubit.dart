@@ -1,8 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pet_care_flutter_app/src/features/camera/camera_injector.dart';
-import 'package:pet_care_flutter_app/src/features/camera/presentation/cubit/get_image_cubit.dart';
+import '../../camera_injector.dart';
+import 'get_image_cubit.dart';
 
 part 'camera_state.dart';
 

@@ -4,11 +4,12 @@ import 'package:animated_widgets/widgets/rotation_animated.dart';
 import 'package:animated_widgets/widgets/shake_animated_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pet_care_flutter_app/src/core/domain/entities/pet_entity.dart';
-import 'package:pet_care_flutter_app/src/core/util/colors.dart';
-import 'package:pet_care_flutter_app/src/features/home/home_injector.dart';
-import 'package:pet_care_flutter_app/src/features/home/presentation/cubit/delete_pet_cubit.dart';
-import 'package:pet_care_flutter_app/src/features/home/presentation/cubit/is_selected_cubit.dart';
+import 'package:pet_care_flutter_app/src/features/pet_details/presentations/pages/pet_details_page.dart';
+import '../../../../core/domain/entities/pet_entity.dart';
+import '../../../../core/util/colors.dart';
+import '../../home_injector.dart';
+import '../cubit/delete_pet_cubit.dart';
+import '../cubit/is_selected_cubit.dart';
 
 class PetCard extends StatefulWidget {
   final List petList;
@@ -55,8 +56,15 @@ class _PetCardState extends State<PetCard> {
                       },
                 onTap: isSelected
                     ? null
-                    : () {
-                        print("Show ${pet.name} details");
+                    : () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PetDetailsPage(
+                              pet: pet,
+                            ),
+                          ),
+                        );
                       },
                 child: Stack(
                   alignment: Alignment.bottomCenter,

@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:pet_care_flutter_app/src/core/errors/failures.dart';
-import 'package:pet_care_flutter_app/src/core/usecases/usecase.dart';
-import 'package:pet_care_flutter_app/src/features/home/domain/repositories/home_repo.dart';
+import '../../../../core/errors/failures.dart';
+import '../../../../core/usecases/usecase.dart';
+import '../repositories/home_repo.dart';
 
 class DeletePetUseCase implements UseCase<void, DeletePetParams> {
   final HomeRepo homeRepo;

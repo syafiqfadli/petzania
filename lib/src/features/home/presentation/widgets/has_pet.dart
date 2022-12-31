@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pet_care_flutter_app/src/core/domain/entities/pet_entity.dart';
-import 'package:pet_care_flutter_app/src/core/util/colors.dart';
-import 'package:pet_care_flutter_app/src/core/widgets/refresh.dart';
-import 'package:pet_care_flutter_app/src/features/home/home_injector.dart';
-import 'package:pet_care_flutter_app/src/features/home/presentation/cubit/get_pet_list_cubit.dart';
-import 'package:pet_care_flutter_app/src/features/home/presentation/cubit/is_selected_cubit.dart';
-import 'package:pet_care_flutter_app/src/features/home/presentation/cubit/refresh_home_cubit.dart';
-import 'package:pet_care_flutter_app/src/features/home/presentation/widgets/pet_card.dart';
+import '../../../../core/domain/entities/pet_entity.dart';
+import '../../../../core/util/colors.dart';
+import '../../../../core/widgets/refresh.dart';
+import '../../home_injector.dart';
+import '../cubit/get_pet_list_cubit.dart';
+import '../cubit/is_selected_cubit.dart';
+import '../cubit/refresh_home_cubit.dart';
+import 'pet_card.dart';
 
 class HasPet extends StatefulWidget {
   const HasPet({Key? key}) : super(key: key);
@@ -61,7 +61,7 @@ class _HasPetState extends State<HasPet> {
                           alignment: Alignment.bottomCenter,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: AppColor.primaryColor,
+                              backgroundColor: AppColor.primaryColor,
                               fixedSize: Size(width, 60),
                             ),
                             onPressed: () {

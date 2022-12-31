@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pet_care_flutter_app/src/core/usecases/navigator/navigator_push_usecase.dart';
-import 'package:pet_care_flutter_app/src/core/util/colors.dart';
-import 'package:pet_care_flutter_app/src/core/widgets/refresh.dart';
-import 'package:pet_care_flutter_app/src/features/add_pet/presentation/pages/add_pet_page.dart';
-import 'package:pet_care_flutter_app/src/features/home/presentation/cubit/refresh_home_cubit.dart';
+import '../../../../core/util/colors.dart';
+import '../../../../core/widgets/refresh.dart';
+import '../../../add_pet/presentation/pages/add_pet_page.dart';
+import '../cubit/refresh_home_cubit.dart';
 
 class NoPet extends StatefulWidget {
   const NoPet({Key? key}) : super(key: key);
@@ -14,8 +13,6 @@ class NoPet extends StatefulWidget {
 }
 
 class _NoPetState extends State<NoPet> {
-  final NavigatorPushUseCase navigatorPushUseCase = NavigatorPushUseCase();
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -44,16 +41,14 @@ class _NoPetState extends State<NoPet> {
               alignment: Alignment.center,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: AppColor.primaryColor,
+                  backgroundColor: AppColor.primaryColor,
                   fixedSize: const Size(190, 50),
                 ),
                 onPressed: () async {
-                  await navigatorPushUseCase(
-                    NavigatorPushParam(
-                      route: MaterialPageRoute(
-                        builder: (context) => const AddPetPage(),
-                      ),
-                      context: context,
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AddPetPage(),
                     ),
                   );
                 },

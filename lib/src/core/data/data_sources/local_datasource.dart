@@ -35,10 +35,6 @@ class LocalDataSourceImpl implements LocalDataSource {
 
   @override
   Future<void> reset() async {
-    // print("erase");
-
-    // print(storage.getKeys().toString());
     await storage.erase();
-    // print(storage.getKeys().toString());
   }
 }

@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pet_care_flutter_app/src/core/util/colors.dart';
-import 'package:pet_care_flutter_app/src/features/camera/camera_injector.dart';
-import 'package:pet_care_flutter_app/src/features/camera/presentation/cubit/camera_cubit.dart';
-import 'package:pet_care_flutter_app/src/features/camera/presentation/cubit/get_image_cubit.dart';
+import '../../../../core/util/colors.dart';
+import '../../camera_injector.dart';
+import '../cubit/camera_cubit.dart';
+import '../cubit/get_image_cubit.dart';
 
 class PreviewPictureWidget extends StatefulWidget {
   const PreviewPictureWidget({Key? key}) : super(key: key);
@@ -56,7 +56,7 @@ class _PreviewPictureWidgetState extends State<PreviewPictureWidget> {
                   const Spacer(),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: AppColor.defaultColor,
+                      backgroundColor: AppColor.defaultColor,
                       fixedSize: Size(width, 60),
                     ),
                     onPressed: () {
@@ -70,12 +70,12 @@ class _PreviewPictureWidgetState extends State<PreviewPictureWidget> {
                   const SizedBox(height: 20),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: AppColor.primaryColor,
+                      backgroundColor: AppColor.primaryColor,
                       fixedSize: Size(width, 60),
                     ),
                     onPressed: () {
-                      Navigator.of(context).pop();
                       context.read<CameraCubit>().resetCamera();
+                      Navigator.of(context).pop();
                     },
                     child: const Text(
                       "Confirm",

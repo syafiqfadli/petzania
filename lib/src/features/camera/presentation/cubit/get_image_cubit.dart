@@ -24,7 +24,7 @@ class GetImageCubit extends Cubit<String?> {
 
       emit(image.path);
     } catch (error) {
-      print(error.toString());
+      emit(null);
     }
   }
 

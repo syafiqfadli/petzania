@@ -1,9 +1,10 @@
-import 'package:pet_care_flutter_app/src/core/domain/entities/pet_entity.dart';
+import '../../domain/entities/pet_entity.dart';
 
 class PetModel extends PetEntity {
   const PetModel({
     required super.image,
     required super.name,
+    required super.breed,
     required super.colorValue,
   });
 
@@ -11,6 +12,7 @@ class PetModel extends PetEntity {
     return PetModel(
       image: parseJson['image'],
       name: parseJson['name'],
+      breed: parseJson['breed'],
       colorValue: parseJson['colorValue'],
     );
   }

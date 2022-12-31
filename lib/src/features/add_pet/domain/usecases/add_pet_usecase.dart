@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pet_care_flutter_app/src/core/domain/entities/pet_entity.dart';
-import 'package:pet_care_flutter_app/src/core/errors/failures.dart';
-import 'package:pet_care_flutter_app/src/core/usecases/usecase.dart';
-import 'package:pet_care_flutter_app/src/features/add_pet/domain/repositories/add_pet_repo.dart';
+import '../../../../core/domain/entities/pet_entity.dart';
+import '../../../../core/errors/failures.dart';
+import '../../../../core/usecases/usecase.dart';
+import '../repositories/add_pet_repo.dart';
 
 class AddPetUseCase implements UseCase<void, AddPetParams> {
   final AddPetRepo addPetRepo;

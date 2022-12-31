@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:dartz/dartz.dart';
-import 'package:pet_care_flutter_app/src/core/data/models/pet_model.dart';
-import 'package:pet_care_flutter_app/src/core/domain/entities/pet_entity.dart';
-import 'package:pet_care_flutter_app/src/core/domain/repositories/core_repo.dart';
-import 'package:pet_care_flutter_app/src/core/errors/failures.dart';
-import 'package:pet_care_flutter_app/src/features/home/domain/repositories/home_repo.dart';
+import '../../../../core/data/models/pet_model.dart';
+import '../../../../core/domain/entities/pet_entity.dart';
+import '../../../../core/domain/repositories/core_repo.dart';
+import '../../../../core/errors/failures.dart';
+import '../../domain/repositories/home_repo.dart';
 
 class HomeRepoImpl implements HomeRepo {
   final CoreRepo coreRepo;
@@ -26,7 +26,6 @@ class HomeRepoImpl implements HomeRepo {
 
       return Right(petList);
     } catch (error) {
-      print(error.toString());
       return Left(CacheFailure(message: error.toString()));
     }
   }

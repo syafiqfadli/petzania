@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pet_care_flutter_app/src/core/util/colors.dart';
+import '../util/colors.dart';
 
 class CustomRefresh extends StatelessWidget {
   final Future<void> Function() onRefresh;

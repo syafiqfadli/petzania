@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pet_care_flutter_app/src/core/widgets/base.dart';
-import 'package:pet_care_flutter_app/src/features/camera/camera_injector.dart';
-import 'package:pet_care_flutter_app/src/features/camera/presentation/cubit/camera_cubit.dart';
-import 'package:pet_care_flutter_app/src/features/camera/presentation/cubit/get_camera_cubit.dart';
-import 'package:pet_care_flutter_app/src/features/camera/presentation/cubit/camera_controller_cubit.dart';
-import 'package:pet_care_flutter_app/src/features/camera/presentation/widgets/preview_picture.dart';
-import 'package:pet_care_flutter_app/src/features/camera/presentation/widgets/take_picture.dart';
+import '../../../../core/widgets/base.dart';
+import '../../camera_injector.dart';
+import '../cubit/camera_cubit.dart';
+import '../cubit/get_camera_cubit.dart';
+import '../cubit/camera_controller_cubit.dart';
+import '../widgets/preview_picture.dart';
+import '../widgets/take_picture.dart';
 
 class CameraPage extends StatefulWidget {
   const CameraPage({Key? key}) : super(key: key);
@@ -49,16 +49,38 @@ class _CameraPageState extends State<CameraPage> {
           return false;
         },
         builder: (context, hasImage) {
-          return BaseWithScaffold(
-            title: hasImage ? "Preview" : "Take Picture",
-            hasRightIcon: false,
-            icon: Icons.arrow_back_ios,
-            iconPressed: hasImage
-                ? cameraCubit.retakePicture
-                : () => Navigator.of(context).pop(),
-            child: hasImage
-                ? const PreviewPictureWidget()
-                : const TakePictureWidget(),
+          return WillPopScope(
+            onWillPop: () {
+              if (hasImage) {
+                cameraCubit.retakePicture();
+                setState(() {});
+                return Future.value(false);
+              }
+
+              Navigator.pop(context);
+              return Future.value(false);
+            },
+            child: BaseWithScaffold(
+              title: hasImage ? "Preview" : "Take Picture",
+              leftIcon: IconButton(
+                icon: const Icon((Icons.arrow_back_ios_new)),
+                onPressed: () {
+                  if (hasImage) {
+                    cameraCubit.retakePicture();
+                    setState(() {});
+                    return;
+                  }
+
+                  Navigator.pop(context);
+                },
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                iconSize: 34,
+              ),
+              child: hasImage
+                  ? const PreviewPictureWidget()
+                  : const TakePictureWidget(),
+            ),
           );
         },
       ),

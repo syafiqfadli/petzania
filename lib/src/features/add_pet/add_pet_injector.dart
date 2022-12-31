@@ -1,8 +1,8 @@
 import 'package:get_it/get_it.dart';
-import 'package:pet_care_flutter_app/src/features/add_pet/data/repositories/add_pet_repo_impl.dart';
-import 'package:pet_care_flutter_app/src/features/add_pet/domain/repositories/add_pet_repo.dart';
-import 'package:pet_care_flutter_app/src/features/add_pet/domain/usecases/add_pet_usecase.dart';
-import 'package:pet_care_flutter_app/src/features/add_pet/presentation/cubit/add_pet_cubit.dart';
+import 'data/repositories/add_pet_repo_impl.dart';
+import 'domain/repositories/add_pet_repo.dart';
+import 'domain/usecases/add_pet_usecase.dart';
+import 'presentation/cubit/add_pet_cubit.dart';
 
 final addPetInjector = GetIt.instance;
 

@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:pet_care_flutter_app/src/core/usecases/navigator/navigator_push_usecase.dart';
-import 'package:pet_care_flutter_app/src/core/util/colors.dart';
-import 'package:pet_care_flutter_app/src/features/add_pet/presentation/pages/add_pet_page.dart';
+import '../util/colors.dart';
 
 class BaseWithScaffold extends StatefulWidget {
   final String title;
-  final bool hasRightIcon;
-  final IconData icon;
-  final void Function() iconPressed;
+  final IconButton leftIcon;
+  final IconButton? rightIcon;
   final Widget? bottomWidget;
   final Widget child;
 
   const BaseWithScaffold({
     Key? key,
     required this.title,
-    required this.hasRightIcon,
-    required this.icon,
-    required this.iconPressed,
+    required this.leftIcon,
+    this.rightIcon,
     this.bottomWidget,
     required this.child,
   }) : super(key: key);
@@ -26,8 +22,6 @@ class BaseWithScaffold extends StatefulWidget {
 }
 
 class _BaseWithScaffoldState extends State<BaseWithScaffold> {
-  final NavigatorPushUseCase navigatorPushUseCase = NavigatorPushUseCase();
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -53,13 +47,7 @@ class _BaseWithScaffoldState extends State<BaseWithScaffold> {
                         children: [
                           Align(
                             alignment: Alignment.centerLeft,
-                            child: IconButton(
-                              onPressed: widget.iconPressed,
-                              icon: Icon(widget.icon),
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              iconSize: 34,
-                            ),
+                            child: widget.leftIcon,
                           ),
                           Align(
                             alignment: Alignment.center,
@@ -71,27 +59,10 @@ class _BaseWithScaffoldState extends State<BaseWithScaffold> {
                               ),
                             ),
                           ),
-                          widget.hasRightIcon
-                              ? Align(
-                                  alignment: Alignment.centerRight,
-                                  child: IconButton(
-                                    onPressed: () async {
-                                      await navigatorPushUseCase(
-                                          NavigatorPushParam(
-                                        route: MaterialPageRoute(
-                                          builder: (context) =>
-                                              const AddPetPage(),
-                                        ),
-                                        context: context,
-                                      ));
-                                    },
-                                    icon: const Icon(Icons.add),
-                                    splashColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    iconSize: 34,
-                                  ),
-                                )
-                              : const SizedBox.shrink(),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: widget.rightIcon,
+                          ),
                         ],
                       ),
                     ],
