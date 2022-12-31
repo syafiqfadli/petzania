@@ -41,6 +41,57 @@ class DialogService {
     );
   }
 
+  static Future showDeleteCancel<T>({
+    required Function() onDelete,
+    required BuildContext context,
+  }) async {
+    return showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Column(
+          children: const [
+            Icon(
+              Icons.delete,
+              size: 45,
+            ),
+            SizedBox(height: 10),
+            Text("Are you sure?"),
+          ],
+        ),
+        actions: [
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColor.primaryColor,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Cancel'),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                  ),
+                  onPressed: () {
+                    onDelete();
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Delete'),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
   static Future showColorPicker<T>({
     required void Function(Color) changeColor,
     required void Function() selectColor,

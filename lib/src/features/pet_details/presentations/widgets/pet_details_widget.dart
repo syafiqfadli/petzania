@@ -9,13 +9,18 @@ class PetDetailsWidget extends StatefulWidget {
   final TextInputType textType;
   final String title;
   final String hint;
-  const PetDetailsWidget({
-    Key? key,
-    required this.textController,
-    required this.textType,
-    required this.title,
-    required this.hint,
-  }) : super(key: key);
+  final FocusNode? focusNode;
+  final String? Function(String?)? validate;
+
+  const PetDetailsWidget(
+      {Key? key,
+      required this.textController,
+      required this.textType,
+      required this.title,
+      required this.hint,
+      this.focusNode,
+      this.validate})
+      : super(key: key);
 
   @override
   State<PetDetailsWidget> createState() => _PetDetailsWidgetState();
@@ -41,10 +46,13 @@ class _PetDetailsWidgetState extends State<PetDetailsWidget> {
                 builder: (context, isEdit) {
                   return InputFieldWidget(
                     enabled: isEdit,
+                    focusNode: widget.focusNode,
                     textController: widget.textController,
+                    textColor: isEdit ? Colors.black : Colors.grey,
                     inputType: widget.textType,
                     hint: widget.hint,
                     isObscure: false,
+                    validate: widget.validate,
                     onChanged: (String? value) {},
                   );
                 },

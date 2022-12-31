@@ -1,10 +1,10 @@
 import 'package:camera/camera.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class GetImageCubit extends Cubit<String?> {
-  GetImageCubit() : super(null);
+class TakePictureCubit extends Cubit<String?> {
+  TakePictureCubit() : super(null);
 
-  Future<void> getImage(CameraController? controller) async {
+  Future<void> takePicture(CameraController? controller) async {
     try {
       XFile? image;
 
@@ -23,7 +23,7 @@ class GetImageCubit extends Cubit<String?> {
       }
 
       emit(image.path);
-    } catch (error) {
+    } catch (_) {
       emit(null);
     }
   }

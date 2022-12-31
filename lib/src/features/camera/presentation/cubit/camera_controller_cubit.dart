@@ -10,6 +10,7 @@ class CameraControllerCubit extends Cubit<CameraController?> {
     if (camera != null) {
       controller = CameraController(camera, ResolutionPreset.max);
       await controller.initialize();
+      controller.setFlashMode(FlashMode.off);
       emit(controller);
       return;
     }

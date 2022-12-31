@@ -14,7 +14,7 @@ import '../cubit/is_color_selected_cubit.dart';
 import '../cubit/is_name_valid_cubit.dart';
 import '../cubit/pick_color_cubit.dart';
 import '../../../camera/camera_injector.dart';
-import '../../../camera/presentation/cubit/get_image_cubit.dart';
+import '../../../camera/presentation/cubit/take_picture_cubit.dart';
 import '../../../camera/presentation/pages/camera_page.dart';
 import '../../../home/home_injector.dart';
 import '../../../home/presentation/bloc/home_bloc.dart';
@@ -31,7 +31,7 @@ class _AddPetPageState extends State<AddPetPage> {
   final PickColorCubit pickColorCubit = PickColorCubit();
   final IsColorSelectedCubit isColorSelectedCubit = IsColorSelectedCubit();
   final IsNameValidCubit isNameValidCubit = IsNameValidCubit();
-  final GetImageCubit getImageCubit = cameraInjector<GetImageCubit>();
+  final TakePictureCubit takePictureCubit = cameraInjector<TakePictureCubit>();
   final AddPetCubit addPetCubit = addPetInjector<AddPetCubit>();
   final HomeBloc homeBloc = homeInjector<HomeBloc>();
 
@@ -48,7 +48,7 @@ class _AddPetPageState extends State<AddPetPage> {
         BlocProvider(create: (context) => pickColorCubit),
         BlocProvider(create: (context) => isColorSelectedCubit),
         BlocProvider(create: (context) => isNameValidCubit),
-        BlocProvider.value(value: getImageCubit),
+        BlocProvider.value(value: takePictureCubit),
         BlocProvider.value(value: addPetCubit),
         BlocProvider.value(value: homeBloc),
       ],
@@ -72,7 +72,7 @@ class _AddPetPageState extends State<AddPetPage> {
         },
         child: WillPopScope(
           onWillPop: () {
-            getImageCubit.resetImage();
+            takePictureCubit.resetImage();
             Navigator.of(context).pop();
             return Future.value(false);
           },
@@ -81,7 +81,7 @@ class _AddPetPageState extends State<AddPetPage> {
             leftIcon: IconButton(
               icon: const Icon((Icons.arrow_back_ios_new)),
               onPressed: () {
-                getImageCubit.resetImage();
+                takePictureCubit.resetImage();
                 Navigator.of(context).pop();
               },
               splashColor: Colors.transparent,
@@ -127,7 +127,7 @@ class _AddPetPageState extends State<AddPetPage> {
                           ),
                         );
                       },
-                      child: BlocBuilder<GetImageCubit, String?>(
+                      child: BlocBuilder<TakePictureCubit, String?>(
                         builder: (context, image) {
                           if (image != null) {
                             return Stack(
@@ -271,9 +271,9 @@ class _AddPetPageState extends State<AddPetPage> {
 
   void _addPet() {
     final pet = PetEntity(
-      image: getImageCubit.state,
+      image: takePictureCubit.state,
       name: _nameController.text,
-      breed: "",
+      breed: "Not Available",
       age: 0,
       colorValue: pickColorCubit.pickedColor.value,
     );
@@ -313,7 +313,7 @@ class _AddPetPageState extends State<AddPetPage> {
       context: context,
     );
     homeBloc.add(GetPetListEvent());
-    getImageCubit.resetImage();
+    takePictureCubit.resetImage();
     _nameController.clear();
     isNameValidCubit.validate(_nameController.text);
     isColorSelectedCubit.isSelected(false);

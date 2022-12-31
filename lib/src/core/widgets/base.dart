@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import '../util/colors.dart';
 
@@ -24,6 +25,8 @@ class BaseWithScaffold extends StatefulWidget {
 class _BaseWithScaffoldState extends State<BaseWithScaffold> {
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -51,11 +54,17 @@ class _BaseWithScaffoldState extends State<BaseWithScaffold> {
                           ),
                           Align(
                             alignment: Alignment.center,
-                            child: Text(
-                              widget.title,
-                              style: const TextStyle(
-                                fontSize: 34,
-                                fontWeight: FontWeight.bold,
+                            child: SizedBox(
+                              width: width * 0.6,
+                              child: Center(
+                                child: AutoSizeText(
+                                  widget.title,
+                                  maxLines: 1,
+                                  style: const TextStyle(
+                                    fontSize: 34,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
                             ),
                           ),

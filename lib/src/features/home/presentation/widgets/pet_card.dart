@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:animated_widgets/widgets/rotation_animated.dart';
 import 'package:animated_widgets/widgets/shake_animated_widget.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../pet_details/presentations/pages/pet_details_page.dart';
@@ -104,10 +105,9 @@ class _PetCardState extends State<PetCard> {
                                   ),
                             const SizedBox(width: 10),
                             Flexible(
-                              child: Text(
+                              child: AutoSizeText(
                                 pet.name,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
+                                maxLines: 2,
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,

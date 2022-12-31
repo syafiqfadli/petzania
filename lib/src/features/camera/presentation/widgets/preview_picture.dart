@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/util/colors.dart';
 import '../../camera_injector.dart';
-import '../cubit/camera_cubit.dart';
-import '../cubit/get_image_cubit.dart';
+import '../cubit/take_picture_cubit.dart';
 
 class PreviewPictureWidget extends StatefulWidget {
   const PreviewPictureWidget({Key? key}) : super(key: key);
@@ -15,7 +14,7 @@ class PreviewPictureWidget extends StatefulWidget {
 }
 
 class _PreviewPictureWidgetState extends State<PreviewPictureWidget> {
-  final GetImageCubit getImageCubit = cameraInjector<GetImageCubit>();
+  final TakePictureCubit getImageCubit = cameraInjector<TakePictureCubit>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class _PreviewPictureWidgetState extends State<PreviewPictureWidget> {
 
     return BlocProvider.value(
       value: getImageCubit,
-      child: BlocBuilder<GetImageCubit, String?>(
+      child: BlocBuilder<TakePictureCubit, String?>(
         builder: (context, image) {
           return Expanded(
             child: Padding(
@@ -60,7 +59,7 @@ class _PreviewPictureWidgetState extends State<PreviewPictureWidget> {
                       fixedSize: Size(width, 60),
                     ),
                     onPressed: () {
-                      context.read<CameraCubit>().retakePicture();
+                      context.read<TakePictureCubit>().resetImage();
                     },
                     child: const Text(
                       "Retake",
@@ -74,7 +73,6 @@ class _PreviewPictureWidgetState extends State<PreviewPictureWidget> {
                       fixedSize: Size(width, 60),
                     ),
                     onPressed: () {
-                      context.read<CameraCubit>().resetCamera();
                       Navigator.of(context).pop();
                     },
                     child: const Text(

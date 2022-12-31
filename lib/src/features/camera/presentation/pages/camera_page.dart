@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:petzania/src/features/camera/camera_injector.dart';
 import '../../../../core/widgets/base.dart';
-import '../../camera_injector.dart';
-import '../cubit/camera_cubit.dart';
 import '../cubit/get_camera_cubit.dart';
 import '../cubit/camera_controller_cubit.dart';
+import '../cubit/take_picture_cubit.dart';
 import '../widgets/preview_picture.dart';
 import '../widgets/take_picture.dart';
 
@@ -17,8 +17,8 @@ class CameraPage extends StatefulWidget {
 
 class _CameraPageState extends State<CameraPage> {
   final GetCameraCubit getCameraCubit = GetCameraCubit();
+  final TakePictureCubit takePictureCubit = cameraInjector<TakePictureCubit>();
   final CameraControllerCubit cameraControllerCubit = CameraControllerCubit();
-  final CameraCubit cameraCubit = cameraInjector<CameraCubit>();
 
   @override
   void initState() {
@@ -36,13 +36,13 @@ class _CameraPageState extends State<CameraPage> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => getCameraCubit),
         BlocProvider(create: (context) => cameraControllerCubit),
-        BlocProvider.value(value: cameraCubit),
+        BlocProvider(create: (context) => getCameraCubit),
+        BlocProvider.value(value: takePictureCubit),
       ],
-      child: BlocSelector<CameraCubit, CameraState, bool>(
-        selector: (state) {
-          if (state is CameraHasImage) {
+      child: BlocSelector<TakePictureCubit, String?, bool>(
+        selector: (image) {
+          if (image != null) {
             return true;
           }
 
@@ -52,7 +52,7 @@ class _CameraPageState extends State<CameraPage> {
           return WillPopScope(
             onWillPop: () {
               if (hasImage) {
-                cameraCubit.retakePicture();
+                takePictureCubit.resetImage();
                 setState(() {});
                 return Future.value(false);
               }
@@ -66,7 +66,7 @@ class _CameraPageState extends State<CameraPage> {
                 icon: const Icon((Icons.arrow_back_ios_new)),
                 onPressed: () {
                   if (hasImage) {
-                    cameraCubit.retakePicture();
+                    takePictureCubit.resetImage();
                     setState(() {});
                     return;
                   }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 class InputFieldWidget extends StatelessWidget {
   final bool? enabled;
+  final Color? textColor;
+  final FocusNode? focusNode;
   final TextEditingController textController;
   final TextInputType inputType;
   final bool isObscure;
@@ -14,6 +16,8 @@ class InputFieldWidget extends StatelessWidget {
   const InputFieldWidget({
     Key? key,
     this.enabled = true,
+    this.textColor = Colors.black,
+    this.focusNode,
     required this.textController,
     required this.inputType,
     required this.isObscure,
@@ -28,6 +32,7 @@ class InputFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       enabled: enabled,
+      focusNode: focusNode,
       controller: textController,
       obscureText: isObscure,
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -35,7 +40,7 @@ class InputFieldWidget extends StatelessWidget {
       onChanged: onChanged,
       validator: validate,
       keyboardType: inputType,
-      style: const TextStyle(fontSize: 20),
+      style: TextStyle(fontSize: 20, color: textColor),
       decoration: InputDecoration(
         fillColor: Colors.white,
         filled: true,
@@ -44,6 +49,7 @@ class InputFieldWidget extends StatelessWidget {
         ),
         labelText: label,
         hintText: hint,
+        errorText: null,
         contentPadding: const EdgeInsets.all(10),
       ),
     );

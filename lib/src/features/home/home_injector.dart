@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:pet_care_flutter_app/src/features/home/domain/usecases/remove_all_pets_usecase.dart';
-import 'package:pet_care_flutter_app/src/features/home/presentation/cubit/remove_all_pets_cubit.dart';
+import 'package:petzania/src/features/home/domain/usecases/remove_all_pets_usecase.dart';
+import 'package:petzania/src/features/home/presentation/cubit/remove_all_pets_cubit.dart';
 import 'data/repositories/home_repo_impl.dart';
 import 'domain/repositories/home_repo.dart';
 import 'domain/usecases/delete_pet_usecase.dart';
