@@ -44,4 +44,15 @@ class CoreRepoImpl implements CoreRepo {
       return Left(CacheFailure(message: error.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> removeAllPets() async {
+    try {
+      await localDataSource.reset();
+
+      return const Right(null);
+    } catch (error) {
+      return Left(CacheFailure(message: error.toString()));
+    }
+  }
 }

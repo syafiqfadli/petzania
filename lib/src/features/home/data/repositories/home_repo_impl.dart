@@ -42,4 +42,11 @@ class HomeRepoImpl implements HomeRepo {
 
     return const Right(null);
   }
+
+  @override
+  Future<Either<Failure, void>> removeAllPets() async {
+    await coreRepo.removeAllPets();
+
+    return const Right(null);
+  }
 }

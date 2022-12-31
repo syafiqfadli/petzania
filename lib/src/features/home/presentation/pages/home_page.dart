@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/widgets/base.dart';
+import '../widgets/sidebar.dart';
 import '../../../add_pet/presentation/pages/add_pet_page.dart';
 import '../../home_injector.dart';
 import '../bloc/home_bloc.dart';
@@ -23,6 +24,7 @@ class _HomePageState extends State<HomePage> {
   final GetPetListCubit getPetListCubit = homeInjector<GetPetListCubit>();
   final RefreshHomeCubit refreshHomeCubit = homeInjector<RefreshHomeCubit>();
   final IsSelectedCubit isSelectedCubit = homeInjector<IsSelectedCubit>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -39,42 +41,52 @@ class _HomePageState extends State<HomePage> {
         BlocProvider.value(value: refreshHomeCubit),
         BlocProvider.value(value: isSelectedCubit),
       ],
-      child: BlocBuilder<IsSelectedCubit, bool>(
-        builder: (context, isSelected) {
-          return BaseWithScaffold(
-            title: "My Pets",
-            leftIcon: IconButton(
-              icon: const Icon((Icons.menu)),
-              onPressed: () {},
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              iconSize: 34,
-            ),
-            rightIcon: IconButton(
-              icon: const Icon((Icons.add)),
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AddPetPage(),
-                  ),
+      child: Scaffold(
+        key: _scaffoldKey,
+        drawer: const SideBarWidget(),
+        body: BaseWithScaffold(
+          title: "My Pets",
+          leftIcon: IconButton(
+            icon: const Icon((Icons.menu)),
+            onPressed: () {
+              _scaffoldKey.currentState!.openDrawer();
+            },
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            iconSize: 34,
+          ),
+          rightIcon: BlocBuilder<IsSelectedCubit, bool>(
+            builder: (context, isSelected) {
+              if (!isSelected) {
+                return IconButton(
+                  icon: const Icon((Icons.add)),
+                  onPressed: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AddPetPage(),
+                      ),
+                    );
+                  },
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  iconSize: 34,
                 );
-              },
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              iconSize: 34,
-            ),
-            child: BlocBuilder<HomeBloc, HomeState>(
-              builder: (context, state) {
-                if (state is HomeHasPet) {
-                  return const HasPet();
-                }
+              }
 
-                return const NoPet();
-              },
-            ),
-          );
-        },
+              return const SizedBox.shrink();
+            },
+          ),
+          child: BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              if (state is HomeHasPet) {
+                return const HasPet();
+              }
+
+              return const NoPet();
+            },
+          ),
+        ),
       ),
     );
   }
