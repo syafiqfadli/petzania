@@ -6,10 +6,13 @@ import 'package:pet_care_flutter_app/src/features/camera/camera_injector.dart'
     as camera_injector;
 import 'package:pet_care_flutter_app/src/features/home/home_injector.dart'
     as home_injector;
+import 'package:pet_care_flutter_app/src/features/pet_details/pet_details_injector.dart'
+    as pet_details_injector;
 
 void init() {
   core_injector.init();
   add_pet_injector.init();
   camera_injector.init();
   home_injector.init();
+  pet_details_injector.init();
 }

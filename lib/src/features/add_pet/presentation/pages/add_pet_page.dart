@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import '../../../../core/domain/entities/pet_entity.dart';
 import '../../../../core/services/dialog_service.dart';
 import '../../../../core/util/colors.dart';
@@ -59,6 +58,7 @@ class _AddPetPageState extends State<AddPetPage> {
             _addPetResult(
               title: "Pet added successfuly!",
               icon: Icons.check,
+              width: width,
             );
           }
 
@@ -66,6 +66,7 @@ class _AddPetPageState extends State<AddPetPage> {
             _addPetResult(
               title: "Add pet failed.",
               icon: Icons.cancel,
+              width: width,
             );
           }
         },
@@ -178,7 +179,7 @@ class _AddPetPageState extends State<AddPetPage> {
                                 "Name",
                                 style: TextStyle(fontSize: 20),
                               ),
-                              const SizedBox(width: 15),
+                              const Spacer(),
                               SizedBox(
                                 width: width * 0.6,
                                 child: InputFieldWidget(
@@ -200,7 +201,7 @@ class _AddPetPageState extends State<AddPetPage> {
                                 "Color",
                                 style: TextStyle(fontSize: 20),
                               ),
-                              const SizedBox(width: 15),
+                              const Spacer(),
                               BlocBuilder<IsColorSelectedCubit, bool>(
                                 builder: (context, isSelected) {
                                   if (!isSelected) {
@@ -209,7 +210,7 @@ class _AddPetPageState extends State<AddPetPage> {
                                         backgroundColor: AppColor.primaryColor,
                                         fixedSize: const Size(190, 40),
                                       ),
-                                      onPressed: _showColorPicker,
+                                      onPressed: () => _showColorPicker(width),
                                       child: const Text(
                                         "Choose Color",
                                         style: TextStyle(fontSize: 20),
@@ -242,7 +243,8 @@ class _AddPetPageState extends State<AddPetPage> {
                                               AppColor.primaryColor,
                                           fixedSize: const Size(120, 40),
                                         ),
-                                        onPressed: _showColorPicker,
+                                        onPressed: () =>
+                                            _showColorPicker(width),
                                         child: const Text(
                                           "Change",
                                           style: TextStyle(fontSize: 20),
@@ -271,7 +273,8 @@ class _AddPetPageState extends State<AddPetPage> {
     final pet = PetEntity(
       image: getImageCubit.state,
       name: _nameController.text,
-      breed: '',
+      breed: "",
+      age: 0,
       colorValue: pickColorCubit.pickedColor.value,
     );
 
@@ -288,27 +291,12 @@ class _AddPetPageState extends State<AddPetPage> {
     Navigator.of(context).pop();
   }
 
-  void _showColorPicker() {
+  void _showColorPicker(double width) {
     FocusManager.instance.primaryFocus?.unfocus();
-    DialogService.show(
-      dialog: AlertDialog(
-        title: const Text('Pick a color!'),
-        content: SingleChildScrollView(
-          child: BlockPicker(
-            pickerColor: AppColor.defaultColor,
-            onColorChanged: _changeColor,
-          ),
-        ),
-        actions: [
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColor.primaryColor,
-            ),
-            onPressed: _selectColor,
-            child: const Text('Pick'),
-          ),
-        ],
-      ),
+    DialogService.showColorPicker(
+      changeColor: _changeColor,
+      selectColor: _selectColor,
+      width: width,
       context: context,
     );
   }
@@ -316,31 +304,12 @@ class _AddPetPageState extends State<AddPetPage> {
   void _addPetResult({
     required String title,
     required IconData icon,
+    required double width,
   }) async {
-    await DialogService.show(
-      dialog: AlertDialog(
-        title: Column(
-          children: [
-            Icon(
-              icon,
-              size: 45,
-            ),
-            const SizedBox(height: 10),
-            Text(title),
-          ],
-        ),
-        actions: [
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColor.primaryColor,
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text('Close'),
-          ),
-        ],
-      ),
+    await DialogService.showResult(
+      title: title,
+      icon: icon,
+      width: width,
       context: context,
     );
     homeBloc.add(GetPetListEvent());

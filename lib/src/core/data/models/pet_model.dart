@@ -5,6 +5,7 @@ class PetModel extends PetEntity {
     required super.image,
     required super.name,
     required super.breed,
+    required super.age,
     required super.colorValue,
   });
 
@@ -13,6 +14,7 @@ class PetModel extends PetEntity {
       image: parseJson['image'],
       name: parseJson['name'],
       breed: parseJson['breed'],
+      age: parseJson['age'],
       colorValue: parseJson['colorValue'],
     );
   }

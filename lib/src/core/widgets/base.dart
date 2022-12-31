@@ -3,8 +3,8 @@ import '../util/colors.dart';
 
 class BaseWithScaffold extends StatefulWidget {
   final String title;
-  final IconButton leftIcon;
-  final IconButton? rightIcon;
+  final Widget leftIcon;
+  final Widget? rightIcon;
   final Widget? bottomWidget;
   final Widget child;
 

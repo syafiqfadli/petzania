@@ -8,3 +8,7 @@ abstract class UpdatePetState extends Equatable {
 }
 
 class UpdatePetInitial extends UpdatePetState {}
+
+class UpdatePetSuccessful extends UpdatePetState {}
+
+class UpdatePetFailed extends UpdatePetState {}

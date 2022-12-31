@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class InputFieldWidget extends StatelessWidget {
+  final bool? enabled;
   final TextEditingController textController;
   final TextInputType inputType;
   final bool isObscure;
@@ -12,6 +13,7 @@ class InputFieldWidget extends StatelessWidget {
 
   const InputFieldWidget({
     Key? key,
+    this.enabled = true,
     required this.textController,
     required this.inputType,
     required this.isObscure,
@@ -25,6 +27,7 @@ class InputFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      enabled: enabled,
       controller: textController,
       obscureText: isObscure,
       autovalidateMode: AutovalidateMode.onUserInteraction,

@@ -4,7 +4,7 @@ import 'package:animated_widgets/widgets/rotation_animated.dart';
 import 'package:animated_widgets/widgets/shake_animated_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pet_care_flutter_app/src/features/pet_details/presentations/pages/pet_details_page.dart';
+import '../../../pet_details/presentations/pages/pet_details_page.dart';
 import '../../../../core/domain/entities/pet_entity.dart';
 import '../../../../core/util/colors.dart';
 import '../../home_injector.dart';
@@ -62,6 +62,7 @@ class _PetCardState extends State<PetCard> {
                           MaterialPageRoute(
                             builder: (context) => PetDetailsPage(
                               pet: pet,
+                              index: index,
                             ),
                           ),
                         );
