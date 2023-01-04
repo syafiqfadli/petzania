@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petzania/src/features/camera/presentation/cubit/take_picture_cubit.dart';
 import '../../../../core/util/colors.dart';
 import '../cubit/camera_controller_cubit.dart';
+import '../cubit/is_loading_cubit.dart';
 
 class TakePictureWidget extends StatelessWidget {
   const TakePictureWidget({Key? key}) : super(key: key);
@@ -72,18 +73,30 @@ class TakePictureWidget extends StatelessWidget {
                       ),
                     ),
               const Spacer(),
-              ElevatedButton(
-                onPressed: () async {
-                  await context
-                      .read<TakePictureCubit>()
-                      .takePicture(controller);
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: const CircleBorder(),
-                  padding: const EdgeInsets.all(20),
-                  backgroundColor: AppColor.primaryColor,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 30),
+                child: BlocBuilder<IsLoadingCubit, bool>(
+                  builder: (context, isLoading) {
+                    return !isLoading
+                        ? ElevatedButton(
+                            onPressed: () async {
+                              context.read<IsLoadingCubit>().setLoading();
+                              await context
+                                  .read<TakePictureCubit>()
+                                  .takePicture(controller);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              shape: const CircleBorder(),
+                              padding: const EdgeInsets.all(20),
+                              backgroundColor: AppColor.primaryColor,
+                            ),
+                            child: const Icon(Icons.camera_alt),
+                          )
+                        : const CircularProgressIndicator(
+                            color: AppColor.defaultColor,
+                          );
+                  },
                 ),
-                child: const Icon(Icons.camera_alt),
               ),
               const SizedBox(height: 25),
             ],
