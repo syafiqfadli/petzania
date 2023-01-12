@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/widgets/base.dart';
-import '../widgets/sidebar.dart';
 import '../../../add_pet/presentation/pages/add_pet_page.dart';
 import '../../home_injector.dart';
 import '../bloc/home_bloc.dart';
@@ -11,6 +10,7 @@ import '../cubit/is_selected_cubit.dart';
 import '../cubit/refresh_home_cubit.dart';
 import '../widgets/has_pet.dart';
 import '../widgets/no_pet.dart';
+import '../widgets/sidebar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

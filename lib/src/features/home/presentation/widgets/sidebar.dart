@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:petzania/src/core/domain/entities/pet_entity.dart';
-import 'package:petzania/src/core/services/dialog_service.dart';
-import 'package:petzania/src/core/util/colors.dart';
-import 'package:petzania/src/features/home/home_injector.dart';
-import 'package:petzania/src/features/home/presentation/cubit/get_pet_list_cubit.dart';
-import 'package:petzania/src/features/home/presentation/cubit/remove_all_pets_cubit.dart';
+import '../../../../core/domain/entities/pet_entity.dart';
+import '../../../../core/services/dialog_service.dart';
+import '../../../../core/util/colors.dart';
+import '../../home_injector.dart';
+import '../cubit/get_pet_list_cubit.dart';
+import '../cubit/remove_all_pets_cubit.dart';
 
 class SideBarWidget extends StatefulWidget {
   const SideBarWidget({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:petzania/src/features/camera/camera_injector.dart';
+import '../../camera_injector.dart';
 import '../../../../core/widgets/base.dart';
 import '../cubit/get_camera_cubit.dart';
 import '../cubit/camera_controller_cubit.dart';
