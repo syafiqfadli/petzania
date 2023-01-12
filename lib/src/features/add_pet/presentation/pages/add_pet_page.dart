@@ -2,22 +2,23 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../core/domain/entities/pet_entity.dart';
 import '../../../../core/services/dialog_service.dart';
 import '../../../../core/util/colors.dart';
 import '../../../../core/widgets/base.dart';
 import '../../../../core/widgets/input_field.dart';
+import '../../../camera/camera_injector.dart';
+import '../../../camera/presentation/cubit/take_picture_cubit.dart';
+import '../../../camera/presentation/pages/camera_page.dart';
+import '../../../home/home_injector.dart';
+import '../../../home/presentation/bloc/home_bloc.dart';
 import '../../add_pet_injector.dart';
 import '../cubit/add_pet_cubit.dart';
 import '../cubit/change_color_cubit.dart';
 import '../cubit/is_color_selected_cubit.dart';
 import '../cubit/is_name_valid_cubit.dart';
 import '../cubit/pick_color_cubit.dart';
-import '../../../camera/camera_injector.dart';
-import '../../../camera/presentation/cubit/take_picture_cubit.dart';
-import '../../../camera/presentation/pages/camera_page.dart';
-import '../../../home/home_injector.dart';
-import '../../../home/presentation/bloc/home_bloc.dart';
 
 class AddPetPage extends StatefulWidget {
   const AddPetPage({Key? key}) : super(key: key);

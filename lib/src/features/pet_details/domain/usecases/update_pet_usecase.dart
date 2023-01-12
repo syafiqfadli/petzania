@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import '../repositories/pet_details_repo.dart';
 
 import '../../../../core/errors/failures.dart';
 import '../../../../core/usecases/usecase.dart';
+import '../repositories/pet_details_repo.dart';
 
 class UpdatePetUseCase implements UseCase<void, UpdatePetParams> {
   final PetDetailsRepo petDetailsRepo;

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:petzania/src/features/camera/camera_injector.dart';
+import '../../camera_injector.dart';
 import '../../../../core/widgets/base.dart';
 import '../cubit/get_camera_cubit.dart';
 import '../cubit/camera_controller_cubit.dart';
+import '../cubit/is_loading_cubit.dart';
 import '../cubit/take_picture_cubit.dart';
 import '../widgets/preview_picture.dart';
 import '../widgets/take_picture.dart';
@@ -16,9 +17,10 @@ class CameraPage extends StatefulWidget {
 }
 
 class _CameraPageState extends State<CameraPage> {
+  final IsLoadingCubit isLoadingCubit = IsLoadingCubit();
   final GetCameraCubit getCameraCubit = GetCameraCubit();
-  final TakePictureCubit takePictureCubit = cameraInjector<TakePictureCubit>();
   final CameraControllerCubit cameraControllerCubit = CameraControllerCubit();
+  final TakePictureCubit takePictureCubit = cameraInjector<TakePictureCubit>();
 
   @override
   void initState() {
@@ -36,6 +38,7 @@ class _CameraPageState extends State<CameraPage> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => isLoadingCubit),
         BlocProvider(create: (context) => cameraControllerCubit),
         BlocProvider(create: (context) => getCameraCubit),
         BlocProvider.value(value: takePictureCubit),
@@ -49,6 +52,9 @@ class _CameraPageState extends State<CameraPage> {
           return false;
         },
         builder: (context, hasImage) {
+          if (hasImage) {
+            isLoadingCubit.setLoading();
+          }
           return WillPopScope(
             onWillPop: () {
               if (hasImage) {

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:petzania/src/features/home/presentation/cubit/get_pet_list_cubit.dart';
+import '../../../home/presentation/cubit/get_pet_list_cubit.dart';
 import '../../../../core/domain/entities/pet_entity.dart';
 import '../../../home/home_injector.dart';
 import '../../../home/presentation/bloc/home_bloc.dart';
@@ -18,6 +18,7 @@ import '../widgets/pet_details_widget.dart';
 class PetDetailsPage extends StatefulWidget {
   final PetEntity pet;
   final int index;
+
   const PetDetailsPage({
     super.key,
     required this.pet,
@@ -81,7 +82,7 @@ class _PetDetailsPageState extends State<PetDetailsPage> {
               listener: (context, state) {
                 if (state is UpdatePetSuccessful) {
                   _updatePetResult(
-                    title: "Saved Successfully!",
+                    title: "Saved!",
                     icon: Icons.check,
                     width: width,
                   );
@@ -267,7 +268,7 @@ class _PetDetailsPageState extends State<PetDetailsPage> {
     required String title,
     required IconData icon,
     required double width,
-  }) async {
+  }) {
     DialogService.showResult(
       title: title,
       icon: icon,

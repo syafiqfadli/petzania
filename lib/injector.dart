@@ -1,4 +1,4 @@
-import 'package:petzania/src/core/core_injector.dart' as core_injector;
+import 'src/core/core_injector.dart' as core_injector;
 import 'package:petzania/src/features/add_pet/add_pet_injector.dart'
     as add_pet_injector;
 import 'package:petzania/src/features/camera/camera_injector.dart'

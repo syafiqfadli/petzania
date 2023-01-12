@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+
 import 'injector.dart' as injector;
 import 'src/features/home/presentation/pages/home_page.dart';
 
