@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../camera_injector.dart';
 import '../../../../core/widgets/base.dart';
-import '../cubit/get_camera_cubit.dart';
 import '../cubit/camera_controller_cubit.dart';
 import '../cubit/is_loading_cubit.dart';
 import '../cubit/take_picture_cubit.dart';
@@ -18,7 +17,6 @@ class CameraPage extends StatefulWidget {
 
 class _CameraPageState extends State<CameraPage> {
   final IsLoadingCubit isLoadingCubit = IsLoadingCubit();
-  final GetCameraCubit getCameraCubit = GetCameraCubit();
   final CameraControllerCubit cameraControllerCubit = CameraControllerCubit();
   final TakePictureCubit takePictureCubit = cameraInjector<TakePictureCubit>();
 
@@ -40,7 +38,6 @@ class _CameraPageState extends State<CameraPage> {
       providers: [
         BlocProvider(create: (context) => isLoadingCubit),
         BlocProvider(create: (context) => cameraControllerCubit),
-        BlocProvider(create: (context) => getCameraCubit),
         BlocProvider.value(value: takePictureCubit),
       ],
       child: BlocSelector<TakePictureCubit, String?, bool>(
@@ -94,9 +91,6 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   void _loadCamera() async {
-    await getCameraCubit.getCamera();
-    final camera = getCameraCubit.state;
-
-    await cameraControllerCubit.initializeController(camera);
+    await cameraControllerCubit.initializeController();
   }
 }

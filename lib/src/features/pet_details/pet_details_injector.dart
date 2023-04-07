@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+
 import 'data/repositories/pet_details_repo_impl.dart';
 import 'domain/repositories/pet_details_repo.dart';
 import 'domain/usecases/update_pet_usecase.dart';

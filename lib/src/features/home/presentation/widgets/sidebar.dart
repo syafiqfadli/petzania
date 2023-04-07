@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+
 import '../../../../core/domain/entities/pet_entity.dart';
 import '../../../../core/services/dialog_service.dart';
 import '../../../../core/util/colors.dart';
@@ -16,7 +17,6 @@ class SideBarWidget extends StatefulWidget {
 }
 
 class _SideBarWidgetState extends State<SideBarWidget> {
-  late GetPetListCubit getPetListCubit;
   final RemoveAllPetsCubit removeAllPetsCubit =
       homeInjector<RemoveAllPetsCubit>();
 
@@ -25,7 +25,6 @@ class _SideBarWidgetState extends State<SideBarWidget> {
   @override
   void initState() {
     super.initState();
-    getPetListCubit = homeInjector<GetPetListCubit>()..getPetList();
     _loadAppInfo();
   }
 
@@ -84,7 +83,7 @@ class _SideBarWidgetState extends State<SideBarWidget> {
                         color: petList.isNotEmpty ? Colors.red : Colors.grey,
                       ),
                       title: Text(
-                        'Remove All Pets',
+                        'Remove All Pets (${context.read<GetPetListCubit>().state.length})',
                         style: TextStyle(
                           color: petList.isNotEmpty ? Colors.red : Colors.grey,
                         ),
