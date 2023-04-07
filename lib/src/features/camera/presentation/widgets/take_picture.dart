@@ -73,30 +73,29 @@ class TakePictureWidget extends StatelessWidget {
                       ),
                     ),
               const Spacer(),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 30),
-                child: BlocBuilder<IsLoadingCubit, bool>(
-                  builder: (context, isLoading) {
-                    return !isLoading
-                        ? ElevatedButton(
-                            onPressed: () async {
-                              context.read<IsLoadingCubit>().setLoading();
-                              await context
-                                  .read<TakePictureCubit>()
-                                  .takePicture(controller);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              shape: const CircleBorder(),
-                              padding: const EdgeInsets.all(20),
-                              backgroundColor: AppColor.primaryColor,
-                            ),
-                            child: const Icon(Icons.camera_alt),
-                          )
-                        : const CircularProgressIndicator(
-                            color: AppColor.defaultColor,
-                          );
-                  },
-                ),
+              BlocBuilder<IsLoadingCubit, bool>(
+                builder: (context, isLoading) {
+                  return !isLoading
+                      ? ElevatedButton(
+                          onPressed: controller == null
+                              ? () {}
+                              : () async {
+                                  context.read<IsLoadingCubit>().setLoading();
+                                  await context
+                                      .read<TakePictureCubit>()
+                                      .takePicture(controller);
+                                },
+                          style: ElevatedButton.styleFrom(
+                            shape: const CircleBorder(),
+                            padding: const EdgeInsets.all(20),
+                            backgroundColor: AppColor.primaryColor,
+                          ),
+                          child: const Icon(Icons.camera_alt),
+                        )
+                      : const CircularProgressIndicator(
+                          color: AppColor.defaultColor,
+                        );
+                },
               ),
               const SizedBox(height: 25),
             ],

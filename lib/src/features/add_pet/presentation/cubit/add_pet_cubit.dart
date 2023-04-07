@@ -1,5 +1,6 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../core/domain/entities/pet_entity.dart';
 import '../../domain/usecases/add_pet_usecase.dart';
 

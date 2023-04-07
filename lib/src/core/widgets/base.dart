@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+
 import '../util/colors.dart';
 
 class BaseWithScaffold extends StatefulWidget {
@@ -36,7 +37,7 @@ class _BaseWithScaffoldState extends State<BaseWithScaffold> {
         ),
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(15, 60, 15, 0),
+            padding: const EdgeInsets.fromLTRB(15, 40, 15, 0),
             child: Column(
               children: [
                 Padding(

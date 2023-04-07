@@ -13,7 +13,7 @@
 		<key>CFBundleInfoDictionaryVersion</key>
 		<string>6.0</string>
 		<key>CFBundleName</key>
-	<string>PetZania</string>
+		<string>PetZania</string>
 		<key>CFBundlePackageType</key>
 		<string>APPL</string>
 		<key>CFBundleShortVersionString</key>
@@ -23,9 +23,9 @@
 		<key>CFBundleVersion</key>
 		<string>$(FLUTTER_BUILD_NUMBER)</string>
 		<key>NSCameraUsageDescription</key>
-		<string>This app uses your camera to take your pets' photo.</string>
+		<string>This app wants to use your camera to take your pets' photo.</string>
 		<key>NSMicrophoneUsageDescription</key>
-		<string></string>
+		<string>This app want to use your microphone.</string>
 		<key>LSRequiresIPhoneOS</key>
 		<true/>
 		<key>UILaunchStoryboardName</key>
@@ -51,5 +51,7 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>UIApplicationSupportsIndirectInputEvents</key>
+		<true/>
 	</dict>
 </plist>

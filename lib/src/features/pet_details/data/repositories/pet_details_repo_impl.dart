@@ -1,9 +1,10 @@
 import 'package:dartz/dartz.dart';
+
 import '../../../../core/domain/entities/pet_entity.dart';
 import '../../../../core/domain/repositories/core_repo.dart';
+import '../../../../core/errors/failures.dart';
 import '../../../home/domain/repositories/home_repo.dart';
 import '../../domain/repositories/pet_details_repo.dart';
-import '../../../../core/errors/failures.dart';
 
 class PetDetailsRepoImpl implements PetDetailsRepo {
   final CoreRepo coreRepo;
