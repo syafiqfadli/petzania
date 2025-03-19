@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-import '../../../../core/domain/entities/pet_entity.dart';
-import '../../../../core/domain/repositories/core_repo.dart';
-import '../../../home/domain/repositories/home_repo.dart';
-import '../../domain/repositories/pet_details_repo.dart';
-import '../../../../core/errors/failures.dart';
+import 'package:petzania/src/core/domain/entities/pet_entity.dart';
+import 'package:petzania/src/core/domain/repositories/core_repo.dart';
+import 'package:petzania/src/core/errors/failures.dart';
+import 'package:petzania/src/features/home/domain/repositories/home_repo.dart';
+import 'package:petzania/src/features/pet_details/domain/repositories/pet_details_repo.dart';
 
 class PetDetailsRepoImpl implements PetDetailsRepo {
   final CoreRepo coreRepo;
@@ -19,7 +19,7 @@ class PetDetailsRepoImpl implements PetDetailsRepo {
     int index,
     String name,
     String breed,
-    String image,
+    String? image,
     int age,
     int colorValue,
   ) async {

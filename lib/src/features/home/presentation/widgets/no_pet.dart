@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/util/colors.dart';
-import '../../../../core/widgets/refresh.dart';
-import '../../../add_pet/presentation/pages/add_pet_page.dart';
-import '../cubit/refresh_home_cubit.dart';
+import 'package:petzania/src/core/util/colors.dart';
+import 'package:petzania/src/core/widgets/refresh.dart';
+import 'package:petzania/src/features/add_pet/presentation/pages/add_pet_page.dart';
+import 'package:petzania/src/features/home/presentation/cubit/refresh_home_cubit.dart';
 
 class NoPet extends StatefulWidget {
-  const NoPet({Key? key}) : super(key: key);
+  const NoPet({super.key});
 
   @override
   State<NoPet> createState() => _NoPetState();
@@ -52,9 +52,9 @@ class _NoPetState extends State<NoPet> {
                     ),
                   );
                 },
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Icon(Icons.add, size: 30),
                     SizedBox(width: 10),
                     Text(

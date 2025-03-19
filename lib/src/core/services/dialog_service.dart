@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-
-import '../util/colors.dart';
+import 'package:petzania/src/core/util/colors.dart';
 
 class DialogService {
   static Future showResult<T>({
@@ -48,8 +47,8 @@ class DialogService {
     return showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: Column(
-          children: const [
+        title: const Column(
+          children: [
             Icon(
               Icons.delete,
               size: 45,

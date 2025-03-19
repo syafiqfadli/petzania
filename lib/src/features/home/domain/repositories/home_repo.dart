@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
-
-import '../../../../core/domain/entities/pet_entity.dart';
-import '../../../../core/errors/failures.dart';
+import 'package:petzania/src/core/domain/entities/pet_entity.dart';
+import 'package:petzania/src/core/errors/failures.dart';
 
 abstract class HomeRepo {
   Future<Either<Failure, List<PetEntity>>> getPetList();

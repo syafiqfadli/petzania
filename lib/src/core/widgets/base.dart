@@ -1,22 +1,22 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import '../util/colors.dart';
+import 'package:petzania/src/core/util/colors.dart';
 
 class BaseWithScaffold extends StatefulWidget {
   final String title;
-  final Widget leftIcon;
-  final Widget? rightIcon;
+  final Widget prefixIcon;
+  final Widget? suffixIcon;
   final Widget? bottomWidget;
   final Widget child;
 
   const BaseWithScaffold({
-    Key? key,
+    super.key,
     required this.title,
-    required this.leftIcon,
-    this.rightIcon,
+    required this.prefixIcon,
+    this.suffixIcon,
     this.bottomWidget,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   State<BaseWithScaffold> createState() => _BaseWithScaffoldState();
@@ -36,7 +36,7 @@ class _BaseWithScaffoldState extends State<BaseWithScaffold> {
         ),
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(15, 60, 15, 0),
+            padding: const EdgeInsets.fromLTRB(15, 40, 15, 0),
             child: Column(
               children: [
                 Padding(
@@ -50,7 +50,7 @@ class _BaseWithScaffoldState extends State<BaseWithScaffold> {
                         children: [
                           Align(
                             alignment: Alignment.centerLeft,
-                            child: widget.leftIcon,
+                            child: widget.prefixIcon,
                           ),
                           Align(
                             alignment: Alignment.center,
@@ -70,7 +70,7 @@ class _BaseWithScaffoldState extends State<BaseWithScaffold> {
                           ),
                           Align(
                             alignment: Alignment.centerRight,
-                            child: widget.rightIcon,
+                            child: widget.suffixIcon,
                           ),
                         ],
                       ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../util/colors.dart';
+import 'package:petzania/src/core/util/colors.dart';
 
 class CustomRefresh extends StatelessWidget {
   final Future<void> Function() onRefresh;
@@ -8,11 +8,11 @@ class CustomRefresh extends StatelessWidget {
   final Widget child;
 
   const CustomRefresh({
-    Key? key,
+    super.key,
     required this.onRefresh,
     required this.child,
     required this.predicate,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

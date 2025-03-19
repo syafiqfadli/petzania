@@ -1,4 +1,4 @@
-import '../../domain/entities/pet_entity.dart';
+import 'package:petzania/src/core/domain/entities/pet_entity.dart';
 
 class PetModel extends PetEntity {
   const PetModel({

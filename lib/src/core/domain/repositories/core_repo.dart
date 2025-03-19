@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import '../entities/pet_entity.dart';
-import '../../errors/failures.dart';
+import 'package:petzania/src/core/domain/entities/pet_entity.dart';
+import 'package:petzania/src/core/errors/failures.dart';
 
 abstract class CoreRepo {
   Future<Either<Failure, void>> savePetList({required List<PetEntity> petList});

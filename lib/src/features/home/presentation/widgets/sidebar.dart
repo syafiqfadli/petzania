@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import '../../../../core/domain/entities/pet_entity.dart';
-import '../../../../core/services/dialog_service.dart';
-import '../../../../core/util/colors.dart';
-import '../../home_injector.dart';
-import '../cubit/get_pet_list_cubit.dart';
-import '../cubit/remove_all_pets_cubit.dart';
+import 'package:petzania/src/core/domain/entities/pet_entity.dart';
+import 'package:petzania/src/core/services/dialog_service.dart';
+import 'package:petzania/src/core/util/colors.dart';
+import 'package:petzania/src/features/home/home_injector.dart';
+import 'package:petzania/src/features/home/presentation/cubit/get_pet_list_cubit.dart';
+import 'package:petzania/src/features/home/presentation/cubit/remove_all_pets_cubit.dart';
 
 class SideBarWidget extends StatefulWidget {
   const SideBarWidget({super.key});
@@ -16,7 +16,6 @@ class SideBarWidget extends StatefulWidget {
 }
 
 class _SideBarWidgetState extends State<SideBarWidget> {
-  late GetPetListCubit getPetListCubit;
   final RemoveAllPetsCubit removeAllPetsCubit =
       homeInjector<RemoveAllPetsCubit>();
 
@@ -25,7 +24,6 @@ class _SideBarWidgetState extends State<SideBarWidget> {
   @override
   void initState() {
     super.initState();
-    getPetListCubit = homeInjector<GetPetListCubit>()..getPetList();
     _loadAppInfo();
   }
 
@@ -51,12 +49,12 @@ class _SideBarWidgetState extends State<SideBarWidget> {
             ListView(
               padding: const EdgeInsets.only(top: 30),
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
+                    children: [
                       Image(
                         image: AssetImage("assets/images/petzania_logo.png"),
                         height: 50,
@@ -84,7 +82,7 @@ class _SideBarWidgetState extends State<SideBarWidget> {
                         color: petList.isNotEmpty ? Colors.red : Colors.grey,
                       ),
                       title: Text(
-                        'Remove All Pets',
+                        'Remove All Pets (${context.read<GetPetListCubit>().state.length})',
                         style: TextStyle(
                           color: petList.isNotEmpty ? Colors.red : Colors.grey,
                         ),

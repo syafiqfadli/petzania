@@ -2,18 +2,19 @@ import 'dart:io';
 
 import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../home/presentation/cubit/get_pet_list_cubit.dart';
-import '../../../../core/domain/entities/pet_entity.dart';
-import '../../../home/home_injector.dart';
-import '../../../home/presentation/bloc/home_bloc.dart';
-import '../cubit/is_edit_cubit.dart';
-import '../cubit/update_pet_cubit.dart';
-
-import '../../../../core/services/dialog_service.dart';
-import '../../../../core/util/colors.dart';
-import '../../../../core/widgets/base.dart';
-import '../../pet_details_injector.dart';
-import '../widgets/pet_details_widget.dart';
+import 'package:petzania/src/core/domain/entities/pet_entity.dart';
+import 'package:petzania/src/core/services/dialog_service.dart';
+import 'package:petzania/src/core/util/colors.dart';
+import 'package:petzania/src/core/widgets/base.dart';
+import 'package:petzania/src/features/camera/presentation/cubit/take_picture_cubit.dart';
+import 'package:petzania/src/features/camera/presentation/pages/camera_page.dart';
+import 'package:petzania/src/features/home/home_injector.dart';
+import 'package:petzania/src/features/home/presentation/bloc/home_bloc.dart';
+import 'package:petzania/src/features/home/presentation/cubit/get_pet_list_cubit.dart';
+import 'package:petzania/src/features/pet_details/pet_details_injector.dart';
+import 'package:petzania/src/features/pet_details/presentations/cubit/is_edit_cubit.dart';
+import 'package:petzania/src/features/pet_details/presentations/cubit/update_pet_cubit.dart';
+import 'package:petzania/src/features/pet_details/presentations/widgets/pet_details_widget.dart';
 
 class PetDetailsPage extends StatefulWidget {
   final PetEntity pet;
@@ -34,6 +35,7 @@ class _PetDetailsPageState extends State<PetDetailsPage> {
   final IsEditCubit isEditCubit = petDetailsInjector<IsEditCubit>();
   final HomeBloc homeBloc = homeInjector<HomeBloc>();
   final GetPetListCubit getPetListCubit = homeInjector<GetPetListCubit>();
+  final TakePictureCubit takePictureCubit = homeInjector<TakePictureCubit>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _breedController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
@@ -64,17 +66,20 @@ class _PetDetailsPageState extends State<PetDetailsPage> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
 
-    return WillPopScope(
-      onWillPop: () {
-        isEditCubit.reset();
-        Navigator.of(context).pop();
-        return Future.value(false);
+    return PopScope(
+      onPopInvoked: (pop) {
+        if (pop) {
+          return;
+        }
+
+        _goBack();
       },
       child: MultiBlocProvider(
         providers: [
           BlocProvider.value(value: updatePetCubit),
           BlocProvider.value(value: getPetListCubit),
           BlocProvider.value(value: isEditCubit),
+          BlocProvider.value(value: takePictureCubit),
         ],
         child: MultiBlocListener(
           listeners: [
@@ -109,18 +114,14 @@ class _PetDetailsPageState extends State<PetDetailsPage> {
             builder: (context, petList) {
               return BaseWithScaffold(
                 title: petList[widget.index].name.toUpperCase(),
-                leftIcon: IconButton(
+                prefixIcon: IconButton(
                   icon: const Icon((Icons.arrow_back_ios_new)),
-                  onPressed: () {
-                    isEditCubit.reset();
-                    homeBloc.add(GetPetListEvent());
-                    Navigator.of(context).pop();
-                  },
+                  onPressed: _goBack,
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   iconSize: 34,
                 ),
-                rightIcon: BlocBuilder<IsEditCubit, bool>(
+                suffixIcon: BlocBuilder<IsEditCubit, bool>(
                   builder: (context, isEdit) {
                     if (isEdit) {
                       return TextButton(
@@ -128,7 +129,6 @@ class _PetDetailsPageState extends State<PetDetailsPage> {
                           foregroundColor: AppColor.primaryColor,
                           textStyle: const TextStyle(
                             fontSize: 20,
-                            fontFamily: "Ambit",
                           ),
                         ),
                         onPressed: () {
@@ -143,7 +143,6 @@ class _PetDetailsPageState extends State<PetDetailsPage> {
                         foregroundColor: AppColor.primaryColor,
                         textStyle: const TextStyle(
                           fontSize: 20,
-                          fontFamily: "Ambit",
                         ),
                       ),
                       onPressed: () {
@@ -165,30 +164,64 @@ class _PetDetailsPageState extends State<PetDetailsPage> {
                             width: 4.0,
                           ),
                         ),
-                        child: InkWell(
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          child: widget.pet.image != null
-                              ? Stack(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: CircleAvatar(
-                                        radius: 80,
-                                        backgroundImage: FileImage(
-                                          File(widget.pet.image!),
+                        child: BlocBuilder<IsEditCubit, bool>(
+                          builder: (context, isEdit) {
+                            return InkWell(
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                FocusManager.instance.primaryFocus?.unfocus();
+
+                                if (!isEdit) {
+                                  return;
+                                }
+
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const CameraPage(),
+                                  ),
+                                );
+                              },
+                              child: BlocBuilder<TakePictureCubit, String?>(
+                                builder: (context, image) {
+                                  if (image != null ||
+                                      widget.pet.image!.isNotEmpty) {
+                                    return Stack(
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.center,
+                                          child: CircleAvatar(
+                                            radius: 80,
+                                            backgroundImage: FileImage(
+                                              File(image ?? widget.pet.image!),
+                                            ),
+                                            backgroundColor: Colors.transparent,
+                                          ),
                                         ),
-                                        backgroundColor: Colors.transparent,
-                                      ),
+                                      ],
+                                    );
+                                  }
+                                  return const CircleAvatar(
+                                    radius: 80,
+                                    backgroundColor: Colors.white,
+                                    foregroundColor: AppColor.defaultColor,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.camera_alt,
+                                          size: 30,
+                                        ),
+                                        Text("Add image")
+                                      ],
                                     ),
-                                  ],
-                                )
-                              : const CircleAvatar(
-                                  radius: 80,
-                                  backgroundColor: Colors.white,
-                                  foregroundColor: AppColor.defaultColor,
-                                  child: Text("No Image"),
-                                ),
+                                  );
+                                },
+                              ),
+                            );
+                          },
                         ),
                       ),
                       Padding(
@@ -243,6 +276,12 @@ class _PetDetailsPageState extends State<PetDetailsPage> {
     );
   }
 
+  void _goBack() {
+    isEditCubit.reset();
+    homeBloc.add(GetPetListEvent());
+    Navigator.of(context).pop();
+  }
+
   Future<void> _saveDetails({
     required PetEntity pet,
     required int index,
@@ -252,13 +291,14 @@ class _PetDetailsPageState extends State<PetDetailsPage> {
     }
 
     isEditCubit.isEdit();
+
     await updatePetCubit.updateDetails(
       index: index,
       name: _nameController.text,
       breed: _breedController.text.isEmpty
           ? "Not Available"
           : _breedController.text,
-      image: pet.image!,
+      image: pet.image,
       age: _ageController.text.isEmpty ? 0 : int.parse(_ageController.text),
       colorValue: pet.colorValue,
     );

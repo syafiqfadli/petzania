@@ -1,8 +1,7 @@
 import 'package:dartz/dartz.dart';
-
-import '../../../../core/errors/failures.dart';
-import '../../../../core/usecases/usecase.dart';
-import '../repositories/home_repo.dart';
+import 'package:petzania/src/core/errors/failures.dart';
+import 'package:petzania/src/core/usecases/usecase.dart';
+import 'package:petzania/src/features/home/domain/repositories/home_repo.dart';
 
 class RemoveAllPetsUseCase implements UseCase<void, NoParams> {
   final HomeRepo homeRepo;

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../core/widgets/input_field.dart';
-import '../cubit/is_edit_cubit.dart';
+import 'package:petzania/src/core/widgets/input_field.dart';
+import 'package:petzania/src/features/pet_details/presentations/cubit/is_edit_cubit.dart';
 
 class PetDetailsWidget extends StatefulWidget {
   final TextEditingController textController;
@@ -13,14 +12,13 @@ class PetDetailsWidget extends StatefulWidget {
   final String? Function(String?)? validate;
 
   const PetDetailsWidget(
-      {Key? key,
+      {super.key,
       required this.textController,
       required this.textType,
       required this.title,
       required this.hint,
       this.focusNode,
-      this.validate})
-      : super(key: key);
+      this.validate});
 
   @override
   State<PetDetailsWidget> createState() => _PetDetailsWidgetState();
@@ -53,7 +51,6 @@ class _PetDetailsWidgetState extends State<PetDetailsWidget> {
                     hint: widget.hint,
                     isObscure: false,
                     validate: widget.validate,
-                    onChanged: (String? value) {},
                   );
                 },
               ),

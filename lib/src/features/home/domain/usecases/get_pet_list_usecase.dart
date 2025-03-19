@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import '../../../../core/domain/entities/pet_entity.dart';
-import '../../../../core/errors/failures.dart';
-import '../../../../core/usecases/usecase.dart';
-import '../repositories/home_repo.dart';
+import 'package:petzania/src/core/domain/entities/pet_entity.dart';
+import 'package:petzania/src/core/errors/failures.dart';
+import 'package:petzania/src/core/usecases/usecase.dart';
+import 'package:petzania/src/features/home/domain/repositories/home_repo.dart';
 
 class GetPetListUseCase implements UseCase<List<PetEntity>, NoParams> {
   final HomeRepo homeRepo;
