@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../core/util/colors.dart';
 import '../../../../core/widgets/refresh.dart';
 import '../../../add_pet/presentation/pages/add_pet_page.dart';
@@ -52,9 +53,9 @@ class _NoPetState extends State<NoPet> {
                     ),
                   );
                 },
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Icon(Icons.add, size: 30),
                     SizedBox(width: 10),
                     Text(

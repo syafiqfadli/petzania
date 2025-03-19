@@ -2,17 +2,17 @@ import 'dart:io';
 
 import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../home/presentation/cubit/get_pet_list_cubit.dart';
-import '../../../../core/domain/entities/pet_entity.dart';
-import '../../../home/home_injector.dart';
-import '../../../home/presentation/bloc/home_bloc.dart';
-import '../cubit/is_edit_cubit.dart';
-import '../cubit/update_pet_cubit.dart';
 
+import '../../../../core/domain/entities/pet_entity.dart';
 import '../../../../core/services/dialog_service.dart';
 import '../../../../core/util/colors.dart';
 import '../../../../core/widgets/base.dart';
+import '../../../home/home_injector.dart';
+import '../../../home/presentation/bloc/home_bloc.dart';
+import '../../../home/presentation/cubit/get_pet_list_cubit.dart';
 import '../../pet_details_injector.dart';
+import '../cubit/is_edit_cubit.dart';
+import '../cubit/update_pet_cubit.dart';
 import '../widgets/pet_details_widget.dart';
 
 class PetDetailsPage extends StatefulWidget {
@@ -64,11 +64,10 @@ class _PetDetailsPageState extends State<PetDetailsPage> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
 
-    return WillPopScope(
-      onWillPop: () {
+    return PopScope(
+      onPopInvoked: (_) {
         isEditCubit.reset();
         Navigator.of(context).pop();
-        return Future.value(false);
       },
       child: MultiBlocProvider(
         providers: [

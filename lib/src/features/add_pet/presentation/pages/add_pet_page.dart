@@ -71,11 +71,10 @@ class _AddPetPageState extends State<AddPetPage> {
             );
           }
         },
-        child: WillPopScope(
-          onWillPop: () {
+        child: PopScope(
+          onPopInvoked: (_) {
             takePictureCubit.resetImage();
             Navigator.of(context).pop();
-            return Future.value(false);
           },
           child: BaseWithScaffold(
             title: "Add Pet",
@@ -146,13 +145,13 @@ class _AddPetPageState extends State<AddPetPage> {
                               ],
                             );
                           }
-                          return CircleAvatar(
+                          return const CircleAvatar(
                             radius: 80,
                             backgroundColor: Colors.white,
                             foregroundColor: AppColor.defaultColor,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
+                              children: [
                                 Icon(
                                   Icons.camera_alt,
                                   size: 30,

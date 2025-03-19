@@ -50,12 +50,12 @@ class _SideBarWidgetState extends State<SideBarWidget> {
             ListView(
               padding: const EdgeInsets.only(top: 30),
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
+                    children: [
                       Image(
                         image: AssetImage("assets/images/petzania_logo.png"),
                         height: 50,

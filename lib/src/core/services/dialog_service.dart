@@ -48,8 +48,8 @@ class DialogService {
     return showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: Column(
-          children: const [
+        title: const Column(
+          children: [
             Icon(
               Icons.delete,
               size: 45,

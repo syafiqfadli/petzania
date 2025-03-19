@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../camera_injector.dart';
+
 import '../../../../core/widgets/base.dart';
+import '../../camera_injector.dart';
 import '../cubit/camera_controller_cubit.dart';
 import '../cubit/is_loading_cubit.dart';
 import '../cubit/take_picture_cubit.dart';
@@ -52,16 +53,15 @@ class _CameraPageState extends State<CameraPage> {
           if (hasImage) {
             isLoadingCubit.setLoading();
           }
-          return WillPopScope(
-            onWillPop: () {
+          return PopScope(
+            onPopInvoked: (_) {
               if (hasImage) {
                 takePictureCubit.resetImage();
                 setState(() {});
-                return Future.value(false);
+                return;
               }
 
               Navigator.pop(context);
-              return Future.value(false);
             },
             child: BaseWithScaffold(
               title: hasImage ? "Preview" : "Take Picture",
