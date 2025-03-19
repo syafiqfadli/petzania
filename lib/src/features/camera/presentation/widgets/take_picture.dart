@@ -1,13 +1,13 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../cubit/take_picture_cubit.dart';
-import '../../../../core/util/colors.dart';
-import '../cubit/camera_controller_cubit.dart';
-import '../cubit/is_loading_cubit.dart';
+import 'package:petzania/src/core/util/colors.dart';
+import 'package:petzania/src/features/camera/presentation/cubit/camera_controller_cubit.dart';
+import 'package:petzania/src/features/camera/presentation/cubit/is_loading_cubit.dart';
+import 'package:petzania/src/features/camera/presentation/cubit/take_picture_cubit.dart';
 
 class TakePictureWidget extends StatelessWidget {
-  const TakePictureWidget({Key? key}) : super(key: key);
+  const TakePictureWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -11,24 +11,24 @@ abstract class Failure<T> extends Equatable {
 }
 
 class ServerFailure<T> extends Failure<T> {
-  const ServerFailure({String message = '', T? cachedData})
-      : super._(cachedData: cachedData, message: message);
+  const ServerFailure({super.message = '', super.cachedData})
+      : super._();
 }
 
 class CacheFailure<T> extends Failure {
-  const CacheFailure({String message = '', T? cachedData})
-      : super._(cachedData: cachedData, message: message);
+  const CacheFailure({super.message = '', T? super.cachedData})
+      : super._();
 }
 
 class SystemFailure<T> extends Failure {
-  const SystemFailure({String message = '', T? cachedData})
-      : super._(cachedData: cachedData, message: message);
+  const SystemFailure({super.message = '', T? super.cachedData})
+      : super._();
 
   @override
   List<Object> get props => [message];
 }
 
 class InvalidInputFailure extends Failure<dynamic> {
-  const InvalidInputFailure({String message = ''})
-      : super._(cachedData: null, message: message);
+  const InvalidInputFailure({super.message = ''})
+      : super._(cachedData: null);
 }

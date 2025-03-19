@@ -14,7 +14,7 @@ class InputFieldWidget extends StatelessWidget {
   final void Function(String?)? onFieldSubmitted;
 
   const InputFieldWidget({
-    Key? key,
+    super.key,
     this.enabled = true,
     this.textColor = Colors.black,
     this.focusNode,
@@ -26,7 +26,7 @@ class InputFieldWidget extends StatelessWidget {
     this.validate,
     this.onChanged,
     this.onFieldSubmitted,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../core/domain/entities/pet_entity.dart';
-import '../../../../core/util/colors.dart';
-import '../../../../core/widgets/refresh.dart';
-import '../../home_injector.dart';
-import '../cubit/get_pet_list_cubit.dart';
-import '../cubit/is_selected_cubit.dart';
-import '../cubit/refresh_home_cubit.dart';
-import 'pet_card.dart';
+import 'package:petzania/src/core/domain/entities/pet_entity.dart';
+import 'package:petzania/src/core/util/colors.dart';
+import 'package:petzania/src/core/widgets/refresh.dart';
+import 'package:petzania/src/features/home/home_injector.dart';
+import 'package:petzania/src/features/home/presentation/cubit/get_pet_list_cubit.dart';
+import 'package:petzania/src/features/home/presentation/cubit/is_selected_cubit.dart';
+import 'package:petzania/src/features/home/presentation/cubit/refresh_home_cubit.dart';
+import 'package:petzania/src/features/home/presentation/widgets/pet_card.dart';
 
 class HasPet extends StatefulWidget {
-  const HasPet({Key? key}) : super(key: key);
+  const HasPet({super.key});
 
   @override
   State<HasPet> createState() => _HasPetState();

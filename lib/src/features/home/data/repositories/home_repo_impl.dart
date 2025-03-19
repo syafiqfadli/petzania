@@ -1,10 +1,11 @@
 import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
-import '../../../../core/data/models/pet_model.dart';
-import '../../../../core/domain/entities/pet_entity.dart';
-import '../../../../core/domain/repositories/core_repo.dart';
-import '../../../../core/errors/failures.dart';
-import '../../domain/repositories/home_repo.dart';
+import 'package:petzania/src/core/data/models/pet_model.dart';
+import 'package:petzania/src/core/domain/entities/pet_entity.dart';
+import 'package:petzania/src/core/domain/repositories/core_repo.dart';
+import 'package:petzania/src/core/errors/failures.dart';
+import 'package:petzania/src/features/home/domain/repositories/home_repo.dart';
 
 class HomeRepoImpl implements HomeRepo {
   final CoreRepo coreRepo;

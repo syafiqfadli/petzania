@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../core/widgets/base.dart';
-import '../../camera_injector.dart';
-import '../cubit/camera_controller_cubit.dart';
-import '../cubit/is_loading_cubit.dart';
-import '../cubit/take_picture_cubit.dart';
-import '../widgets/preview_picture.dart';
-import '../widgets/take_picture.dart';
+import 'package:petzania/src/core/widgets/base.dart';
+import 'package:petzania/src/features/camera/camera_injector.dart';
+import 'package:petzania/src/features/camera/presentation/cubit/camera_controller_cubit.dart';
+import 'package:petzania/src/features/camera/presentation/cubit/is_loading_cubit.dart';
+import 'package:petzania/src/features/camera/presentation/cubit/take_picture_cubit.dart';
+import 'package:petzania/src/features/camera/presentation/widgets/preview_picture.dart';
+import 'package:petzania/src/features/camera/presentation/widgets/take_picture.dart';
 
 class CameraPage extends StatefulWidget {
-  const CameraPage({Key? key}) : super(key: key);
+  const CameraPage({super.key});
 
   @override
   State<CameraPage> createState() => _CameraPageState();
@@ -54,28 +53,18 @@ class _CameraPageState extends State<CameraPage> {
             isLoadingCubit.setLoading();
           }
           return PopScope(
-            onPopInvoked: (_) {
-              if (hasImage) {
-                takePictureCubit.resetImage();
-                setState(() {});
+            onPopInvoked: (pop) {
+              if (pop) {
                 return;
               }
 
-              Navigator.pop(context);
+              _goBack(hasImage);
             },
             child: BaseWithScaffold(
               title: hasImage ? "Preview" : "Take Picture",
-              leftIcon: IconButton(
+              prefixIcon: IconButton(
                 icon: const Icon((Icons.arrow_back_ios_new)),
-                onPressed: () {
-                  if (hasImage) {
-                    takePictureCubit.resetImage();
-                    setState(() {});
-                    return;
-                  }
-
-                  Navigator.pop(context);
-                },
+                onPressed: () => _goBack(hasImage),
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 iconSize: 34,
@@ -88,6 +77,16 @@ class _CameraPageState extends State<CameraPage> {
         },
       ),
     );
+  }
+
+  void _goBack(bool hasImage) {
+    if (hasImage) {
+      takePictureCubit.resetImage();
+      setState(() {});
+      return;
+    }
+
+    Navigator.pop(context);
   }
 
   void _loadCamera() async {

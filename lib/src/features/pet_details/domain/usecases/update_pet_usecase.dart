@@ -1,9 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-
-import '../../../../core/errors/failures.dart';
-import '../../../../core/usecases/usecase.dart';
-import '../repositories/pet_details_repo.dart';
+import 'package:petzania/src/core/errors/failures.dart';
+import 'package:petzania/src/core/usecases/usecase.dart';
+import 'package:petzania/src/features/pet_details/domain/repositories/pet_details_repo.dart';
 
 class UpdatePetUseCase implements UseCase<void, UpdatePetParams> {
   final PetDetailsRepo petDetailsRepo;
@@ -29,7 +28,7 @@ class UpdatePetParams extends Equatable {
   final int index;
   final String name;
   final String breed;
-  final String image;
+  final String? image;
   final int age;
   final int colorValue;
 

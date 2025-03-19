@@ -2,26 +2,25 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../core/domain/entities/pet_entity.dart';
-import '../../../../core/services/dialog_service.dart';
-import '../../../../core/util/colors.dart';
-import '../../../../core/widgets/base.dart';
-import '../../../../core/widgets/input_field.dart';
-import '../../../camera/camera_injector.dart';
-import '../../../camera/presentation/cubit/take_picture_cubit.dart';
-import '../../../camera/presentation/pages/camera_page.dart';
-import '../../../home/home_injector.dart';
-import '../../../home/presentation/bloc/home_bloc.dart';
-import '../../add_pet_injector.dart';
-import '../cubit/add_pet_cubit.dart';
-import '../cubit/change_color_cubit.dart';
-import '../cubit/is_color_selected_cubit.dart';
-import '../cubit/is_name_valid_cubit.dart';
-import '../cubit/pick_color_cubit.dart';
+import 'package:petzania/src/core/domain/entities/pet_entity.dart';
+import 'package:petzania/src/core/services/dialog_service.dart';
+import 'package:petzania/src/core/util/colors.dart';
+import 'package:petzania/src/core/widgets/base.dart';
+import 'package:petzania/src/core/widgets/input_field.dart';
+import 'package:petzania/src/features/add_pet/add_pet_injector.dart';
+import 'package:petzania/src/features/add_pet/presentation/cubit/add_pet_cubit.dart';
+import 'package:petzania/src/features/add_pet/presentation/cubit/change_color_cubit.dart';
+import 'package:petzania/src/features/add_pet/presentation/cubit/is_color_selected_cubit.dart';
+import 'package:petzania/src/features/add_pet/presentation/cubit/is_name_valid_cubit.dart';
+import 'package:petzania/src/features/add_pet/presentation/cubit/pick_color_cubit.dart';
+import 'package:petzania/src/features/camera/camera_injector.dart';
+import 'package:petzania/src/features/camera/presentation/cubit/take_picture_cubit.dart';
+import 'package:petzania/src/features/camera/presentation/pages/camera_page.dart';
+import 'package:petzania/src/features/home/home_injector.dart';
+import 'package:petzania/src/features/home/presentation/bloc/home_bloc.dart';
 
 class AddPetPage extends StatefulWidget {
-  const AddPetPage({Key? key}) : super(key: key);
+  const AddPetPage({super.key});
 
   @override
   State<AddPetPage> createState() => _AddPetPageState();
@@ -72,18 +71,18 @@ class _AddPetPageState extends State<AddPetPage> {
           }
         },
         child: PopScope(
-          onPopInvoked: (_) {
-            takePictureCubit.resetImage();
-            Navigator.of(context).pop();
+          onPopInvoked: (pop) {
+            if (pop) {
+              return;
+            }
+
+            _goBack();
           },
           child: BaseWithScaffold(
             title: "Add Pet",
-            leftIcon: IconButton(
+            prefixIcon: IconButton(
               icon: const Icon((Icons.arrow_back_ios_new)),
-              onPressed: () {
-                takePictureCubit.resetImage();
-                Navigator.of(context).pop();
-              },
+              onPressed: _goBack,
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               iconSize: 34,
@@ -267,6 +266,11 @@ class _AddPetPageState extends State<AddPetPage> {
         ),
       ),
     );
+  }
+
+  void _goBack() {
+    takePictureCubit.resetImage();
+    Navigator.of(context).pop();
   }
 
   void _addPet() {

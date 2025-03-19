@@ -2,13 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../core/util/colors.dart';
-import '../../camera_injector.dart';
-import '../cubit/take_picture_cubit.dart';
+import 'package:petzania/src/core/util/colors.dart';
+import 'package:petzania/src/features/camera/camera_injector.dart';
+import 'package:petzania/src/features/camera/presentation/cubit/take_picture_cubit.dart';
 
 class PreviewPictureWidget extends StatefulWidget {
-  const PreviewPictureWidget({Key? key}) : super(key: key);
+  const PreviewPictureWidget({super.key});
 
   @override
   State<PreviewPictureWidget> createState() => _PreviewPictureWidgetState();

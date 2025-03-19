@@ -4,13 +4,12 @@ import 'package:animated_widgets/widgets/rotation_animated.dart';
 import 'package:animated_widgets/widgets/shake_animated_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../core/domain/entities/pet_entity.dart';
-import '../../../../core/util/colors.dart';
-import '../../../pet_details/presentations/pages/pet_details_page.dart';
-import '../../home_injector.dart';
-import '../cubit/delete_pet_cubit.dart';
-import '../cubit/is_selected_cubit.dart';
+import 'package:petzania/src/core/domain/entities/pet_entity.dart';
+import 'package:petzania/src/core/util/colors.dart';
+import 'package:petzania/src/features/home/home_injector.dart';
+import 'package:petzania/src/features/home/presentation/cubit/delete_pet_cubit.dart';
+import 'package:petzania/src/features/home/presentation/cubit/is_selected_cubit.dart';
+import 'package:petzania/src/features/pet_details/presentations/pages/pet_details_page.dart';
 
 class PetCard extends StatefulWidget {
   final List petList;
@@ -18,11 +17,11 @@ class PetCard extends StatefulWidget {
   final int index;
 
   const PetCard({
-    Key? key,
+    super.key,
     required this.pet,
     required this.index,
     required this.petList,
-  }) : super(key: key);
+  });
 
   @override
   State<PetCard> createState() => _PetCardState();
@@ -50,11 +49,7 @@ class _PetCardState extends State<PetCard> {
               child: InkWell(
                 highlightColor: Colors.transparent,
                 splashColor: Colors.transparent,
-                onLongPress: isSelected
-                    ? null
-                    : () {
-                        isSelectedCubit.isSelected();
-                      },
+                onLongPress: isSelected ? null : isSelectedCubit.isSelected,
                 onTap: isSelected
                     ? null
                     : () async {
@@ -85,7 +80,7 @@ class _PetCardState extends State<PetCard> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            pet.image == null
+                            pet.image!.isEmpty
                                 ? CircleAvatar(
                                     radius: 30,
                                     backgroundColor: Colors.white,

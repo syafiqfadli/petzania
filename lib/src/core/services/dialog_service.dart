@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-
-import '../util/colors.dart';
+import 'package:petzania/src/core/util/colors.dart';
 
 class DialogService {
   static Future showResult<T>({

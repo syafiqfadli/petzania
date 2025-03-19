@@ -1,8 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../core/domain/entities/pet_entity.dart';
-import '../../domain/usecases/add_pet_usecase.dart';
+import 'package:petzania/src/core/domain/entities/pet_entity.dart';
+import 'package:petzania/src/features/add_pet/domain/usecases/add_pet_usecase.dart';
 
 part 'add_pet_state.dart';
 

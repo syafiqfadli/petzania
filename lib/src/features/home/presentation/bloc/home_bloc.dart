@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../cubit/get_pet_list_cubit.dart';
+import 'package:petzania/src/features/home/presentation/cubit/get_pet_list_cubit.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';

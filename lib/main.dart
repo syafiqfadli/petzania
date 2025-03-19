@@ -14,13 +14,16 @@ void main() async {
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({Key? key}) : super(key: key);
+  const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: "Ambit"),
+      theme: ThemeData(
+        useMaterial3: false,
+        fontFamily: "Ambit",
+      ),
       home: const HomePage(),
     );
   }

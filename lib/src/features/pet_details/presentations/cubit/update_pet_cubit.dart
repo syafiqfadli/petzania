@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../domain/usecases/update_pet_usecase.dart';
+import 'package:petzania/src/features/pet_details/domain/usecases/update_pet_usecase.dart';
 
 part 'update_pet_state.dart';
 
@@ -14,7 +13,7 @@ class UpdatePetCubit extends Cubit<UpdatePetState> {
     required int index,
     required String name,
     required String breed,
-    required String image,
+    required String? image,
     required int age,
     required int colorValue,
   }) async {

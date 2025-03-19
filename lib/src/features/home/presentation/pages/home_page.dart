@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../core/widgets/base.dart';
-import '../../../add_pet/presentation/pages/add_pet_page.dart';
-import '../../home_injector.dart';
-import '../bloc/home_bloc.dart';
-import '../cubit/get_pet_list_cubit.dart';
-import '../cubit/is_selected_cubit.dart';
-import '../cubit/refresh_home_cubit.dart';
-import '../widgets/has_pet.dart';
-import '../widgets/no_pet.dart';
-import '../widgets/sidebar.dart';
+import 'package:petzania/src/core/widgets/base.dart';
+import 'package:petzania/src/features/add_pet/presentation/pages/add_pet_page.dart';
+import 'package:petzania/src/features/home/home_injector.dart';
+import 'package:petzania/src/features/home/presentation/bloc/home_bloc.dart';
+import 'package:petzania/src/features/home/presentation/cubit/get_pet_list_cubit.dart';
+import 'package:petzania/src/features/home/presentation/cubit/is_selected_cubit.dart';
+import 'package:petzania/src/features/home/presentation/cubit/refresh_home_cubit.dart';
+import 'package:petzania/src/features/home/presentation/widgets/has_pet.dart';
+import 'package:petzania/src/features/home/presentation/widgets/no_pet.dart';
+import 'package:petzania/src/features/home/presentation/widgets/sidebar.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -46,7 +45,7 @@ class _HomePageState extends State<HomePage> {
         drawer: const SideBarWidget(),
         body: BaseWithScaffold(
           title: "My Pets",
-          leftIcon: IconButton(
+          prefixIcon: IconButton(
             icon: const Icon((Icons.menu)),
             onPressed: () {
               _scaffoldKey.currentState!.openDrawer();
@@ -55,7 +54,7 @@ class _HomePageState extends State<HomePage> {
             highlightColor: Colors.transparent,
             iconSize: 34,
           ),
-          rightIcon: BlocBuilder<IsSelectedCubit, bool>(
+          suffixIcon: BlocBuilder<IsSelectedCubit, bool>(
             builder: (context, isSelected) {
               if (!isSelected) {
                 return IconButton(

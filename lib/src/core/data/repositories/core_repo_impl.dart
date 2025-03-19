@@ -1,12 +1,11 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
-
-import '../../domain/entities/pet_entity.dart';
-import '../../domain/repositories/core_repo.dart';
-import '../../errors/failures.dart';
-import '../../util/keys.dart';
-import '../data_sources/local_datasource.dart';
+import 'package:petzania/src/core/data/data_sources/local_datasource.dart';
+import 'package:petzania/src/core/domain/entities/pet_entity.dart';
+import 'package:petzania/src/core/domain/repositories/core_repo.dart';
+import 'package:petzania/src/core/errors/failures.dart';
+import 'package:petzania/src/core/util/keys.dart';
 
 class CoreRepoImpl implements CoreRepo {
   final LocalDataSource localDataSource;
